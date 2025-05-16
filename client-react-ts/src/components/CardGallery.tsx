@@ -1,6 +1,16 @@
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
-const CardGallery = ({ cards, index, setIndex }) => {
+interface CardGalleryProps {
+  cards: string[];
+  index: number;
+  setIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const CardGallery: React.FC<CardGalleryProps> = ({
+  cards,
+  index,
+  setIndex,
+}) => {
   const handlePrev = () => {
     if (index > 0) {
       setIndex((prevIndex) => prevIndex - 1);
@@ -14,12 +24,13 @@ const CardGallery = ({ cards, index, setIndex }) => {
   };
 
   return (
-    <div className="card-gallery">
-      <FaAngleLeft
+    <div className="card-gallery" data-testid="card-gallery">
+      <button
         className={`arrow-left ${index === 0 ? "disabled" : ""}`}
-        disabled={index === 0 ? true : false}
         onClick={() => handlePrev()}
-      />
+      >
+        <FaAngleLeft />
+      </button>
       {index > 0 && cards.length > 2 && (
         <img
           className="card-image-prev"
@@ -42,13 +53,15 @@ const CardGallery = ({ cards, index, setIndex }) => {
           onClick={() => handleNext()}
         />
       )}
-      <FaAngleRight
+      <button
         className={`arrow-right
           ${
             cards.length === 0 || index === cards.length - 1 ? "disabled" : ""
           }`}
         onClick={() => handleNext()}
-      />
+      >
+        <FaAngleRight />
+      </button>
     </div>
   );
 };

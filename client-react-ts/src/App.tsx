@@ -1,14 +1,14 @@
 import { useState } from "react";
-import "./App.css";
+import "./styles/App.css";
 import CardGallery from "./components/CardGallery";
 import SearchForm from "./components/SearchForm";
 
 function App() {
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState([] as string[]);
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="App">
+    <div className="App" data-testid="root">
       <CardGallery cards={cards} index={index} setIndex={setIndex} />
       <SearchForm
         cards={cards}

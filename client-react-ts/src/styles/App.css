@@ -78,6 +78,8 @@
 .arrow-right,
 .arrow-left {
   color: black;
+  background: none;
+  border: none;
 }
 
 .arrow-left {

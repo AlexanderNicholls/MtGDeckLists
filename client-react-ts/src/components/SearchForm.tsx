@@ -1,18 +1,34 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { useState } from "react";
-import { getCardsByName } from "../api";
+import { getCardsByName } from "../api.ts";
 
-const SearchForm = ({ cards, setCards, index, setIndex }) => {
+interface SearchFormProps {
+  cards: string[];
+  setCards: React.Dispatch<React.SetStateAction<string[]>>;
+  index: number;
+  setIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const SearchForm: React.FC<SearchFormProps> = ({
+  cards,
+  setCards,
+  index,
+  setIndex,
+}) => {
   const [search, setSearch] = useState("");
 
-  const handleSearch = async (cardName) => {
+  const handleSearch = async (cardName: string) => {
     const cards = await getCardsByName(cardName);
     setCards(cards);
     setIndex(0);
   };
 
   return (
-    <form className="search-form" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="search-form"
+      onSubmit={(e) => e.preventDefault()}
+      data-testid="search-form"
+    >
       <input
         className="search-card-name"
         type="text"
@@ -23,9 +39,9 @@ const SearchForm = ({ cards, setCards, index, setIndex }) => {
       <button
         type="submit"
         className="search-button"
-        onClick={(e) => handleSearch(search)}
+        onClick={() => handleSearch(search)}
       >
-        <FaMagnifyingGlass className="search-icon" />
+        <FaMagnifyingGlass />
       </button>
       <label className="search-count">
         {cards.length > 0 ? `${index + 1} of ${cards.length}` : ""}

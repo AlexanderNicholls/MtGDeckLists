@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import "./App.css";
+import CardGallery from "./components/CardGallery";
+import SearchForm from "./components/SearchForm";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api")
-      .then((response) => setMessage(response.data.message))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  const [cards, setCards] = useState([]);
+  const [index, setIndex] = useState(0);
 
   return (
     <div className="App">
-      <h1>{message}</h1>
+      <CardGallery cards={cards} index={index} setIndex={setIndex} />
+      <SearchForm
+        cards={cards}
+        setCards={setCards}
+        index={index}
+        setIndex={setIndex}
+      />
     </div>
   );
 }

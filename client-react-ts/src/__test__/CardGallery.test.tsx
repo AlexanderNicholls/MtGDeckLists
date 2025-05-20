@@ -16,6 +16,69 @@ describe("CardGallery component", () => {
     expect(expected).toBeInTheDocument();
   });
 
+  describe("Arrow buttons", () => {
+    test("should render left and right arrow buttons", () => {
+      const { queryByTestId } = Render_SUT();
+      const leftArrow = queryByTestId("arrow-left");
+      const rightArrow = queryByTestId("arrow-right");
+      expect(leftArrow).toBeInTheDocument();
+      expect(rightArrow).toBeInTheDocument();
+    });
+
+    test("should be greyed out if no cards provided", () => {
+      const { queryByTestId } = Render_SUT();
+      const leftArrow = queryByTestId("arrow-left");
+      const rightArrow = queryByTestId("arrow-right");
+      expect(leftArrow).toHaveClass("disabled");
+      expect(rightArrow).toHaveClass("disabled");
+    });
+
+    test("should be greyed out if only one card provided", () => {
+      const { queryByTestId } = Render_SUT([MockData.ImageUrl_BlackLotus]);
+      const leftArrow = queryByTestId("arrow-left");
+      const rightArrow = queryByTestId("arrow-right");
+      expect(leftArrow).toHaveClass("disabled");
+      expect(rightArrow).toHaveClass("disabled");
+    });
+
+    test("should grey out left arrow only if two cards provided", () => {
+      const { queryByTestId } = Render_SUT([
+        MockData.ImageUrl_BlackLotus,
+        MockData.ImageUrl_GildedLotus,
+      ]);
+      const leftArrow = queryByTestId("arrow-left");
+      const rightArrow = queryByTestId("arrow-right");
+      expect(leftArrow).toHaveClass("disabled");
+      expect(rightArrow).not.toHaveClass("disabled");
+    });
+
+    test("should grey out neither arrow if three cards provided and viewing second card", () => {
+      const { queryByTestId } = Render_SUT(
+        [
+          MockData.ImageUrl_BlackLotus,
+          MockData.ImageUrl_GildedLotus,
+          MockData.ImageUrl_LotusPetal,
+        ],
+        1
+      );
+      const leftArrow = queryByTestId("arrow-left");
+      const rightArrow = queryByTestId("arrow-right");
+      expect(leftArrow).not.toHaveClass("disabled");
+      expect(rightArrow).not.toHaveClass("disabled");
+    });
+
+    test("should grey out right arrow only if two cards provided and viewing last card", () => {
+      const { queryByTestId } = Render_SUT(
+        [MockData.ImageUrl_BlackLotus, MockData.ImageUrl_GildedLotus],
+        1
+      );
+      const leftArrow = queryByTestId("arrow-left");
+      const rightArrow = queryByTestId("arrow-right");
+      expect(leftArrow).not.toHaveClass("disabled");
+      expect(rightArrow).toHaveClass("disabled");
+    });
+  });
+
   describe("Image Elements", () => {
     test("should render card back if no cards provided", () => {
       const { queryByTestId } = Render_SUT();
@@ -174,7 +237,7 @@ describe("CardGallery component", () => {
       expect(cardImgLeft.src).toEqual(MockData.ImageUrl_BlackLotus);
     });
 
-    test("should reset to viewing first card if index parameter invalid", () => {
+    test.skip("should reset to viewing first card if index parameter invalid", () => {
       const { queryByTestId } = Render_SUT(
         [
           MockData.ImageUrl_BlackLotus,

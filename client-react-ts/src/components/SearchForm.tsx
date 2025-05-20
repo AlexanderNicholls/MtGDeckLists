@@ -3,19 +3,19 @@ import { useState } from "react";
 import { getCardsByName } from "../api.ts";
 
 interface SearchFormProps {
-  initialSearch: string;
   cards: string[];
   setCards: React.Dispatch<React.SetStateAction<string[]>>;
   index: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
+  initialSearch?: string;
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({
-  initialSearch = "",
   cards,
   setCards,
   index,
   setIndex,
+  initialSearch = "",
 }) => {
   const [search, setSearch] = useState(initialSearch);
 

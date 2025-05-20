@@ -11,7 +11,7 @@ const CardGallery: React.FC<CardGalleryProps> = ({
   index,
   setIndex,
 }) => {
-  if (index > cards.length - 1) index = 0;
+  if (index > cards.length - 1 || index < 0) setIndex(0);
 
   const handlePrev = () => {
     if (index > 0) {
@@ -30,6 +30,7 @@ const CardGallery: React.FC<CardGalleryProps> = ({
       <button
         className={`arrow-left ${index === 0 ? "disabled" : ""}`}
         onClick={() => handlePrev()}
+        data-testid="arrow-left"
       >
         <FaAngleLeft />
       </button>
@@ -64,6 +65,7 @@ const CardGallery: React.FC<CardGalleryProps> = ({
             cards.length === 0 || index === cards.length - 1 ? "disabled" : ""
           }`}
         onClick={() => handleNext()}
+        data-testid="arrow-right"
       >
         <FaAngleRight />
       </button>

@@ -9,7 +9,7 @@ app.use(express.json());
 
 const MTGIO_URL_NAME = "http://api.magicthegathering.io/v1/cards?name=";
 
-app.get("/api", async (req, res) => {
+app.get("/api/GetCards", async (req, res) => {
   try {
     const response = await axios.get(MTGIO_URL_NAME, {
       params: {

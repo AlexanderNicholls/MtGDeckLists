@@ -11,6 +11,8 @@ const CardGallery: React.FC<CardGalleryProps> = ({
   index,
   setIndex,
 }) => {
+  if (index > cards.length - 1) index = 0;
+
   const handlePrev = () => {
     if (index > 0) {
       setIndex((prevIndex) => prevIndex - 1);
@@ -31,11 +33,12 @@ const CardGallery: React.FC<CardGalleryProps> = ({
       >
         <FaAngleLeft />
       </button>
-      {index > 0 && cards.length > 2 && (
+      {index > 0 && cards.length > 1 && (
         <img
           className="card-image-prev"
           src={cards[index - 1]}
           onClick={() => handlePrev()}
+          data-testid="card-image-prev"
         />
       )}
       <img
@@ -45,12 +48,14 @@ const CardGallery: React.FC<CardGalleryProps> = ({
             ? cards[index]
             : "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card"
         }
+        data-testid="card-image-current"
       />
       {index < cards.length - 1 && (
         <img
           className="card-image-next"
           src={cards[index + 1]}
           onClick={() => handleNext()}
+          data-testid="card-image-next"
         />
       )}
       <button

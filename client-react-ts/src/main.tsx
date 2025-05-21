@@ -7,7 +7,7 @@ async function enableMocking() {
     return;
   }
 
-  const { server } = await import("./msw/server.ts");
+  const { worker: server } = await import("./msw/server.ts");
 
   return server.listen();
 }

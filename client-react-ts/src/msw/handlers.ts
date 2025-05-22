@@ -29,6 +29,8 @@ const MockData = {
   ImageUrl_JeweledLotus: "http://localhost:3000/JeweledLotus.jpg",
   CardName_LotusBloom: "Lotus Bloom",
   ImageUrl_LotusBloom: "http://localhost:3000/LotusBloom.jpg",
+
+  NetworkError: "Network Error",
 };
 
 const handlers = [
@@ -53,6 +55,8 @@ const handlers = [
         return HttpResponse.json([MockData.ImageUrl_JeweledLotus]);
       case MockData.CardName_LotusBloom:
         return HttpResponse.json([MockData.ImageUrl_LotusBloom]);
+      case MockData.NetworkError:
+        return HttpResponse.error();
       default:
         return HttpResponse.json([]);
     }

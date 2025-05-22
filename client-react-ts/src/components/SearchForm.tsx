@@ -19,7 +19,10 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
   const handleSearch = async (cardName: string) => {
     if (!cardName) return;
     const result = await getCardsByName(cardName);
-    if (result.length === 0) {
+    if (result === undefined) {
+      setMessage("Error fetching data.");
+      return;
+    } else if (result.length === 0) {
       setMessage("No matching cards found.");
     } else {
       setMessage(`${index + 1} of ${result.length}`);

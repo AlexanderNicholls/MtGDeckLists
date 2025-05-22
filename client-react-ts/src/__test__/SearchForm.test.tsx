@@ -105,5 +105,16 @@ describe("SearchForm component", () => {
           done();
         }, 100);
       }));
+
+    test("displays message if card search failed", () =>
+      new Promise<void>((done) => {
+        const { queryByTestId } = Render_SUT(MockData.NetworkError);
+        queryByTestId("search-button")?.click();
+        const expected = queryByTestId("search-label");
+        setTimeout(() => {
+          expect(expected).toHaveTextContent("Error fetching data.");
+          done();
+        }, 100);
+      }));
   });
 });

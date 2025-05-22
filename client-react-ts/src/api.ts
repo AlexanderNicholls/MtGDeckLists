@@ -14,7 +14,7 @@ const getCardsByName: (cardName: string) => Promise<string[]> = async (
     });
     return response.data;
   } catch (err) {
-    console.error("Error fetching data:", err);
+    return undefined;
   }
 };
 

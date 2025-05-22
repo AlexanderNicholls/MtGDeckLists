@@ -2,12 +2,17 @@ import { expect, test, describe } from "vitest";
 import { render } from "@testing-library/react";
 import CardGallery from "../components/CardGallery";
 import { MockData } from "../msw/handlers";
+import { DataProvider } from "../context/DataContext";
 
 const IMG_URI_CardBack =
   "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card";
 
 const Render_SUT = (cards: string[] = [], index: number = 0) =>
-  render(<CardGallery cards={cards} index={index} setIndex={() => {}} />);
+  render(
+    <DataProvider value={{ search: "", cards, index }}>
+      <CardGallery />
+    </DataProvider>
+  );
 
 describe("CardGallery component", () => {
   test("should render without crashing", () => {
@@ -237,7 +242,7 @@ describe("CardGallery component", () => {
       expect(cardImgLeft.src).toEqual(MockData.ImageUrl_BlackLotus);
     });
 
-    test.skip("should reset to viewing first card if index parameter invalid", () => {
+    test("should reset to viewing first card if index parameter invalid", () => {
       const { queryByTestId } = Render_SUT(
         [
           MockData.ImageUrl_BlackLotus,

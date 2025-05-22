@@ -1,28 +1,30 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getCardsByName } from "../api.ts";
+import "../styles/SearchForm.css";
+import DataContext from "../context/DataContext.tsx";
 
 interface SearchFormProps {
-  cards: string[];
-  setCards: React.Dispatch<React.SetStateAction<string[]>>;
-  index: number;
-  setIndex: React.Dispatch<React.SetStateAction<number>>;
   initialSearch?: string;
 }
 
-const SearchForm: React.FC<SearchFormProps> = ({
-  cards,
-  setCards,
-  index,
-  setIndex,
-  initialSearch = "",
-}) => {
-  const [search, setSearch] = useState(initialSearch);
+const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
+  const { search, setSearch, setCards, index, setIndex, message, setMessage } =
+    useContext(DataContext);
+
+  useEffect(() => {
+    setSearch(initialSearch);
+  }, []);
 
   const handleSearch = async (cardName: string) => {
     if (!cardName) return;
-    const cards = await getCardsByName(cardName);
-    setCards(cards);
+    const result = await getCardsByName(cardName);
+    if (result.length === 0) {
+      setMessage("No matching cards found.");
+    } else {
+      setMessage(`${index + 1} of ${result.length}`);
+      setCards(result);
+    }
     setIndex(0);
   };
 
@@ -39,6 +41,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Enter a Card Name..."
         data-testid="search-input"
+        autoFocus
       />
       <button
         type="submit"
@@ -48,8 +51,8 @@ const SearchForm: React.FC<SearchFormProps> = ({
       >
         <FaMagnifyingGlass />
       </button>
-      <label className="search-count" data-testid="search-count">
-        {cards.length > 0 ? `${index + 1} of ${cards.length}` : ""}
+      <label className="search-label" data-testid="search-label">
+        {message}
       </label>
     </form>
   );

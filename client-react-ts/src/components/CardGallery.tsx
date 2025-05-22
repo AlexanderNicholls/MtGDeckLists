@@ -1,26 +1,25 @@
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import "../styles/CardGallery.css";
+import DataContext from "../context/DataContext";
+import { useContext, useEffect } from "react";
 
-interface CardGalleryProps {
-  cards: string[];
-  index: number;
-  setIndex: React.Dispatch<React.SetStateAction<number>>;
-}
+const CardGallery: React.FC = () => {
+  const { cards, index, setIndex, setMessage } = useContext(DataContext);
 
-const CardGallery: React.FC<CardGalleryProps> = ({
-  cards,
-  index,
-  setIndex,
-}) => {
-  if (index > cards.length - 1 || index < 0) setIndex(0);
+  useEffect(() => {
+    if (index > cards.length - 1 || index < 0) setIndex(0);
+  });
 
   const handlePrev = () => {
     if (index > 0) {
+      setMessage(`${index} of ${cards.length}`);
       setIndex((prevIndex) => prevIndex - 1);
     }
   };
 
   const handleNext = () => {
     if (cards.length > 0 && index < cards.length - 1) {
+      setMessage(`${index + 2} of ${cards.length}`);
       setIndex((prevIndex) => prevIndex + 1);
     }
   };

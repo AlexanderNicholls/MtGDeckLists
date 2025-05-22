@@ -1,19 +1,15 @@
-import { expect, test, describe, vi } from "vitest";
-import { render, waitFor } from "@testing-library/react";
+import { expect, test, describe } from "vitest";
+import { render } from "@testing-library/react";
 import SearchForm from "../components/SearchForm";
-import axios from "axios";
 import { MockApiUrl, MockData, MonitorAPI } from "../msw/handlers";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { DataProvider } from "../context/DataContext";
 
 const Render_SUT = (cardName: string = "") =>
   render(
-    <SearchForm
-      cards={[]}
-      setCards={() => {}}
-      index={0}
-      setIndex={() => {}}
-      initialSearch={cardName}
-    />
+    <DataProvider>
+      <SearchForm initialSearch={cardName} />
+    </DataProvider>
   );
 
 describe("SearchForm component", () => {
@@ -68,11 +64,44 @@ describe("SearchForm component", () => {
       new Promise<void>((done) => {
         const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
         queryByTestId("search-button")?.click();
-
+        const expected = queryByTestId("search-label");
         setTimeout(() => {
           expect(MonitorAPI.callHistory[MockApiUrl.GetByCardName]).toHaveLength(
             1
           );
+          expect(expected).toHaveTextContent("1 of 1");
+          done();
+        }, 100);
+      }));
+
+    test("displays blank message on render", () =>
+      new Promise<void>((done) => {
+        const { queryByTestId } = Render_SUT();
+        const expected = queryByTestId("search-label");
+        setTimeout(() => {
+          expect(expected).toHaveTextContent("");
+          done();
+        }, 100);
+      }));
+
+    test("displays message with card count and current viewing index", () =>
+      new Promise<void>((done) => {
+        const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
+        queryByTestId("search-button")?.click();
+        const expected = queryByTestId("search-label");
+        setTimeout(() => {
+          expect(expected).toHaveTextContent("1 of 1");
+          done();
+        }, 100);
+      }));
+
+    test("displays message if card search returned no matches", () =>
+      new Promise<void>((done) => {
+        const { queryByTestId } = Render_SUT("InvalidCardName");
+        queryByTestId("search-button")?.click();
+        const expected = queryByTestId("search-label");
+        setTimeout(() => {
+          expect(expected).toHaveTextContent("No matching cards found.");
           done();
         }, 100);
       }));

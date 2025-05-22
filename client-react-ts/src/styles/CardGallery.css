@@ -1,0 +1,70 @@
+.card-gallery {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 25vh;
+  margin-inline: auto;
+  width: fit-content;
+}
+
+.card-gallery img {
+  width: 223px;
+  height: 311px;
+}
+
+.card-image-next,
+.card-image-prev,
+.card-image-current {
+  margin: auto;
+  position: absolute;
+  left: -110px;
+  transition: all 0.1s ease;
+}
+
+.card-image-current:hover {
+  transform: scale(1.05);
+}
+
+.card-image-next,
+.card-image-prev {
+  transform: scale(0.8);
+}
+
+.card-image-next:hover,
+.card-image-prev:hover {
+  transform: scale(0.85);
+}
+
+.card-image-prev,
+.card-image-next {
+  z-index: -1;
+}
+
+.card-image-prev {
+  left: -160px;
+}
+.card-image-next {
+  left: -60px;
+}
+
+.arrow-right,
+.arrow-left {
+  color: black;
+  background: none;
+  border: none;
+}
+
+.arrow-left {
+  right: 150px;
+  position: absolute;
+  top: 150px;
+}
+.arrow-right {
+  left: 150px;
+  position: absolute;
+  top: 150px;
+}
+
+.disabled {
+  color: lightgray;
+}

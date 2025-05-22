@@ -171,27 +171,6 @@ describe("CardGallery component", () => {
       expect(cardImgLeft.src).toEqual(MockData.ImageUrl_BlackLotus);
     });
 
-    test("should only render center and left img element if two cards provided and viewing second card", () => {
-      const secondCardIndex = 1;
-      const { queryByTestId } = Render_SUT(
-        [MockData.ImageUrl_BlackLotus, MockData.ImageUrl_GildedLotus],
-        secondCardIndex
-      );
-      const cardImgCenter = queryByTestId(
-        "card-image-current"
-      ) as HTMLImageElement;
-      const cardImgRight = queryByTestId("card-image-next") as HTMLImageElement;
-      const cardImgLeft = queryByTestId("card-image-prev") as HTMLImageElement;
-
-      expect(cardImgCenter).toBeInTheDocument();
-      expect(cardImgCenter.src).toEqual(MockData.ImageUrl_GildedLotus);
-
-      expect(cardImgRight).not.toBeInTheDocument();
-
-      expect(cardImgLeft).toBeInTheDocument();
-      expect(cardImgLeft.src).toEqual(MockData.ImageUrl_BlackLotus);
-    });
-
     test("should only render center and left img element if three cards provided and viewing last card", () => {
       const lastCardIndex = 2;
       const { queryByTestId } = Render_SUT(

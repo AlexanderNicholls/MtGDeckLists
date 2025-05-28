@@ -22,19 +22,22 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
     if (result === undefined) {
       setMessage("Error fetching data.");
       return;
-    } else if (result.length === 0) {
+    }
+    setIndex(0);
+    setCards(result);
+    if (result.length === 0) {
       setMessage("No matching cards found.");
     } else {
       setMessage(`${index + 1} of ${result.length}`);
-      setCards(result);
     }
-    setIndex(0);
   };
 
   return (
     <form
       className="search-form"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={(e) => {
+        e.preventDefault(), handleSearch(search);
+      }}
       aria-label="search form"
     >
       <input
@@ -50,7 +53,6 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
       <button
         type="submit"
         className="search-button"
-        onClick={() => handleSearch(search)}
         aria-label="search button"
       >
         <FaMagnifyingGlass title="search" />

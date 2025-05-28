@@ -3,8 +3,11 @@ import { render, waitFor } from "@testing-library/react";
 import SearchForm from "../components/SearchForm";
 import { URIs, Logs } from "../__test__/__mocks__/MockApi";
 import MockData from "../__test__/__mocks__/MockData";
-import { FaMagnifyingGlass } from "react-icons/fa6";
 import { DataProvider } from "../context/DataContext";
+
+const searchForm = "search form";
+const searchInput = "search input";
+const searchButton = "search button";
 
 const Render_SUT = (cardName: string = "") =>
   render(
@@ -15,42 +18,40 @@ const Render_SUT = (cardName: string = "") =>
 
 describe("SearchForm component", () => {
   test("should render without crashing", () => {
-    const { queryByTestId } = Render_SUT();
-    const expected = queryByTestId("search-form");
+    const { getByRole } = Render_SUT();
+    const expected = getByRole("form", { name: searchForm });
     expect(expected).toBeInTheDocument();
   });
 
   describe("should render an input text box", () => {
     test("without crashing", () => {
-      const { queryByTestId } = Render_SUT();
-      const expected = queryByTestId("search-input");
+      const { getByRole } = Render_SUT();
+      const expected = getByRole("textbox", { name: searchInput });
       expect(expected).toBeInTheDocument();
     });
 
     test("with correct placeholder text", () => {
-      const { queryByTestId } = Render_SUT();
-      const input = queryByTestId("search-input");
-      const expected = "Enter a Card Name...";
-      expect(input).toHaveAttribute("placeholder", expected);
+      const { getByPlaceholderText } = Render_SUT();
+      expect(getByPlaceholderText("Enter a Card Name...")).toBeInTheDocument();
     });
   });
 
   describe("Search Button", () => {
     test("should render without crashing", () => {
-      const { queryByTestId } = Render_SUT();
-      const expected = queryByTestId("search-button");
+      const { getByRole } = Render_SUT();
+      const expected = getByRole("button", { name: searchButton });
       expect(expected).toBeInTheDocument();
     });
 
     test("should render with a magnifying glass icon", () => {
-      const { queryByTestId } = Render_SUT();
-      const expected = queryByTestId("search-button")?.firstChild;
-      expect(expected).toBeTypeOf(typeof (<FaMagnifyingGlass />));
+      const { getByTitle } = Render_SUT();
+      const expected = getByTitle("search");
+      expect(expected).toBeInTheDocument();
     });
 
     test("doesn't make an api call if search text empty when clicked", async () => {
-      const { queryByTestId } = Render_SUT();
-      queryByTestId("search-button")?.click();
+      const { getByRole } = Render_SUT();
+      getByRole("button", { name: searchButton })?.click();
 
       await waitFor(() => {
         expect(Logs.CallHistory[URIs.GetByCardName]).toBeUndefined();
@@ -58,48 +59,46 @@ describe("SearchForm component", () => {
     });
 
     test("makes an api call if search text valid when clicked", async () => {
-      const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
-      queryByTestId("search-button")?.click();
-      const expected = queryByTestId("search-label");
+      const { getByRole, getByText } = Render_SUT(MockData.CardName_BlackLotus);
+      getByRole("button", { name: searchButton })?.click();
 
       await waitFor(() => {
         expect(Logs.CallHistory[URIs.GetByCardName]).toHaveLength(1);
-        expect(expected).toHaveTextContent("1 of 1");
+        expect(getByText("1 of 1")).toBeInTheDocument();
       });
     });
 
     test("displays blank message on render", async () => {
-      const { queryByTestId } = Render_SUT();
-      const expected = queryByTestId("search-label");
+      const { getByLabelText } = Render_SUT();
+      const expected = getByLabelText("");
       await waitFor(() => {
         expect(expected).toHaveTextContent("");
       });
     });
 
     test("displays message with card count and current viewing index", async () => {
-      const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
-      queryByTestId("search-button")?.click();
-      const expected = queryByTestId("search-label");
+      const { getByRole, getByLabelText } = Render_SUT(
+        MockData.CardName_BlackLotus
+      );
+      getByRole("button", { name: searchButton })?.click();
       await waitFor(() => {
-        expect(expected).toHaveTextContent("1 of 1");
+        expect(getByLabelText("1 of 1")).toBeInTheDocument();
       });
     });
 
     test("displays message if card search returned no matches", async () => {
-      const { queryByTestId } = Render_SUT("InvalidCardName");
-      queryByTestId("search-button")?.click();
-      const expected = queryByTestId("search-label");
+      const { getByRole, getByLabelText } = Render_SUT("InvalidCardName");
+      getByRole("button", { name: searchButton })?.click();
       await waitFor(() => {
-        expect(expected).toHaveTextContent("No matching cards found.");
+        expect(getByLabelText("No matching cards found.")).toBeInTheDocument();
       });
     });
 
     test("displays message if card search failed", async () => {
-      const { queryByTestId } = Render_SUT(MockData.NetworkError);
-      queryByTestId("search-button")?.click();
-      const expected = queryByTestId("search-label");
+      const { getByRole, getByLabelText } = Render_SUT(MockData.NetworkError);
+      getByRole("button", { name: searchButton })?.click();
       await waitFor(() => {
-        expect(expected).toHaveTextContent("Error fetching data.");
+        expect(getByLabelText("Error fetching data.")).toBeInTheDocument();
       });
     });
   });

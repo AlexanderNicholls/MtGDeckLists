@@ -25,11 +25,11 @@ const CardGallery: React.FC = () => {
   };
 
   return (
-    <div className="card-gallery" data-testid="card-gallery">
+    <section className="card-gallery" aria-label="card gallery">
       <button
         className={`arrow-left ${index === 0 ? "disabled" : ""}`}
         onClick={() => handlePrev()}
-        data-testid="arrow-left"
+        aria-label="previous arrow button"
       >
         <FaAngleLeft />
       </button>
@@ -38,7 +38,7 @@ const CardGallery: React.FC = () => {
           className="card-image-prev"
           src={cards[index - 1]}
           onClick={() => handlePrev()}
-          data-testid="card-image-prev"
+          aria-label="previous card image"
         />
       )}
       <img
@@ -48,14 +48,14 @@ const CardGallery: React.FC = () => {
             ? cards[index]
             : "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card"
         }
-        data-testid="card-image-current"
+        aria-label="current card image"
       />
       {index < cards.length - 1 && (
         <img
           className="card-image-next"
           src={cards[index + 1]}
           onClick={() => handleNext()}
-          data-testid="card-image-next"
+          aria-label="next card image"
         />
       )}
       <button
@@ -64,11 +64,11 @@ const CardGallery: React.FC = () => {
             cards.length === 0 || index === cards.length - 1 ? "disabled" : ""
           }`}
         onClick={() => handleNext()}
-        data-testid="arrow-right"
+        aria-label="next arrow button"
       >
         <FaAngleRight />
       </button>
-    </div>
+    </section>
   );
 };
 

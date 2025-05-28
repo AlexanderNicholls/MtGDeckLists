@@ -35,7 +35,7 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
     <form
       className="search-form"
       onSubmit={(e) => e.preventDefault()}
-      data-testid="search-form"
+      aria-label="search form"
     >
       <input
         className="search-card-name"
@@ -43,18 +43,23 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Enter a Card Name..."
-        data-testid="search-input"
+        id="search-input"
+        aria-label="search input"
         autoFocus
       />
       <button
         type="submit"
         className="search-button"
         onClick={() => handleSearch(search)}
-        data-testid="search-button"
+        aria-label="search button"
       >
-        <FaMagnifyingGlass />
+        <FaMagnifyingGlass title="search" />
       </button>
-      <label className="search-label" data-testid="search-label">
+      <label
+        className="search-label"
+        aria-label="search results label"
+        htmlFor="search-input"
+      >
         {message}
       </label>
     </form>

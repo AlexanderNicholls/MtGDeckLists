@@ -1,48 +1,17 @@
 import { http, HttpResponse } from "msw";
+import MockData from "../__test__/__mocks__/MockData";
+import { Logs, URIs } from "../__test__/__mocks__/MockApi";
 
-const MonitorAPI = {
-  callHistory: {} as { [key: string]: {}[] },
-  LogCall: (url: string, params: string[]) => {
-    MonitorAPI.callHistory[url] ??= [];
-    MonitorAPI.callHistory[url].push({
-      uri: url,
-      params: params,
-    });
-  },
-};
-
-const MockApiUrl = {
-  BaseUrl: "http://localhost:5000/api",
-  get GetByCardName() {
-    return `${this.BaseUrl}/GetCards`;
-  },
-};
-
-const MockData = {
-  CardName_BlackLotus: "Black Lotus",
-  ImageUrl_BlackLotus: "http://localhost:3000/BlackLotus.jpg",
-  CardName_GildedLotus: "Gilded Lotus",
-  ImageUrl_GildedLotus: "http://localhost:3000/GildedLotus.jpg",
-  CardName_LotusPetal: "Lotus Petal",
-  ImageUrl_LotusPetal: "http://localhost:3000/LotusPetal.jpg",
-  CardName_JeweledLotus: "Jeweled Lotus",
-  ImageUrl_JeweledLotus: "http://localhost:3000/JeweledLotus.jpg",
-  CardName_LotusBloom: "Lotus Bloom",
-  ImageUrl_LotusBloom: "http://localhost:3000/LotusBloom.jpg",
-
-  NetworkError: "Network Error",
-};
-
-const handlers = [
-  http.get(MockApiUrl.BaseUrl, ({ request }) => {
-    MonitorAPI.LogCall(request.url, []);
+const Handlers = [
+  http.get(URIs.BaseUrl, ({ request }) => {
+    Logs.LogCall(request.url, []);
     return HttpResponse.json();
   }),
 
-  http.get(MockApiUrl.GetByCardName, ({ request }) => {
+  http.get(URIs.GetByCardName, ({ request }) => {
     const url = new URL(request.url);
     const cardName = url.searchParams.get("cardName");
-    MonitorAPI.LogCall(MockApiUrl.GetByCardName, [cardName ?? ""]);
+    Logs.LogCall(URIs.GetByCardName, [cardName ?? ""]);
 
     switch (cardName) {
       case MockData.CardName_BlackLotus:
@@ -63,4 +32,4 @@ const handlers = [
   }),
 ];
 
-export { handlers, MockApiUrl, MockData, MonitorAPI };
+export default Handlers;

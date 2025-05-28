@@ -1,7 +1,7 @@
 import { expect, test, describe } from "vitest";
 import { render } from "@testing-library/react";
 import CardGallery from "../components/CardGallery";
-import { MockData } from "../msw/handlers";
+import MockData from "./__mocks__/MockData";
 import { DataProvider } from "../context/DataContext";
 
 const IMG_URI_CardBack =

@@ -1,7 +1,8 @@
 import { expect, test, describe } from "vitest";
 import { render } from "@testing-library/react";
 import SearchForm from "../components/SearchForm";
-import { MockApiUrl, MockData, MonitorAPI } from "../msw/handlers";
+import { URIs, Logs } from "../__test__/__mocks__/MockApi";
+import MockData from "../__test__/__mocks__/MockData";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { DataProvider } from "../context/DataContext";
 
@@ -53,9 +54,7 @@ describe("SearchForm component", () => {
         queryByTestId("search-button")?.click();
 
         setTimeout(() => {
-          expect(
-            MonitorAPI.callHistory[MockApiUrl.GetByCardName]
-          ).toBeUndefined();
+          expect(Logs.CallHistory[URIs.GetByCardName]).toBeUndefined();
           done();
         }, 100);
       }));
@@ -66,9 +65,7 @@ describe("SearchForm component", () => {
         queryByTestId("search-button")?.click();
         const expected = queryByTestId("search-label");
         setTimeout(() => {
-          expect(MonitorAPI.callHistory[MockApiUrl.GetByCardName]).toHaveLength(
-            1
-          );
+          expect(Logs.CallHistory[URIs.GetByCardName]).toHaveLength(1);
           expect(expected).toHaveTextContent("1 of 1");
           done();
         }, 100);

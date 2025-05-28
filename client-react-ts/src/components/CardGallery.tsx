@@ -8,7 +8,7 @@ const CardGallery: React.FC = () => {
 
   useEffect(() => {
     if (index > cards.length - 1 || index < 0) setIndex(0);
-  });
+  }, [index, cards.length]);
 
   const handlePrev = () => {
     if (index > 0) {

@@ -1,5 +1,5 @@
 import { expect, test, describe } from "vitest";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import SearchForm from "../components/SearchForm";
 import { URIs, Logs } from "../__test__/__mocks__/MockApi";
 import MockData from "../__test__/__mocks__/MockData";
@@ -48,70 +48,59 @@ describe("SearchForm component", () => {
       expect(expected).toBeTypeOf(typeof (<FaMagnifyingGlass />));
     });
 
-    test("doesn't make an api call if search text empty when clicked", () =>
-      new Promise<void>((done) => {
-        const { queryByTestId } = Render_SUT();
-        queryByTestId("search-button")?.click();
+    test("doesn't make an api call if search text empty when clicked", async () => {
+      const { queryByTestId } = Render_SUT();
+      queryByTestId("search-button")?.click();
 
-        setTimeout(() => {
-          expect(Logs.CallHistory[URIs.GetByCardName]).toBeUndefined();
-          done();
-        }, 100);
-      }));
+      await waitFor(() => {
+        expect(Logs.CallHistory[URIs.GetByCardName]).toBeUndefined();
+      });
+    });
 
-    test("makes an api call if search text valid when clicked", () =>
-      new Promise<void>((done) => {
-        const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
-        queryByTestId("search-button")?.click();
-        const expected = queryByTestId("search-label");
-        setTimeout(() => {
-          expect(Logs.CallHistory[URIs.GetByCardName]).toHaveLength(1);
-          expect(expected).toHaveTextContent("1 of 1");
-          done();
-        }, 100);
-      }));
+    test("makes an api call if search text valid when clicked", async () => {
+      const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
+      queryByTestId("search-button")?.click();
+      const expected = queryByTestId("search-label");
 
-    test("displays blank message on render", () =>
-      new Promise<void>((done) => {
-        const { queryByTestId } = Render_SUT();
-        const expected = queryByTestId("search-label");
-        setTimeout(() => {
-          expect(expected).toHaveTextContent("");
-          done();
-        }, 100);
-      }));
+      await waitFor(() => {
+        expect(Logs.CallHistory[URIs.GetByCardName]).toHaveLength(1);
+        expect(expected).toHaveTextContent("1 of 1");
+      });
+    });
 
-    test("displays message with card count and current viewing index", () =>
-      new Promise<void>((done) => {
-        const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
-        queryByTestId("search-button")?.click();
-        const expected = queryByTestId("search-label");
-        setTimeout(() => {
-          expect(expected).toHaveTextContent("1 of 1");
-          done();
-        }, 100);
-      }));
+    test("displays blank message on render", async () => {
+      const { queryByTestId } = Render_SUT();
+      const expected = queryByTestId("search-label");
+      await waitFor(() => {
+        expect(expected).toHaveTextContent("");
+      });
+    });
 
-    test("displays message if card search returned no matches", () =>
-      new Promise<void>((done) => {
-        const { queryByTestId } = Render_SUT("InvalidCardName");
-        queryByTestId("search-button")?.click();
-        const expected = queryByTestId("search-label");
-        setTimeout(() => {
-          expect(expected).toHaveTextContent("No matching cards found.");
-          done();
-        }, 100);
-      }));
+    test("displays message with card count and current viewing index", async () => {
+      const { queryByTestId } = Render_SUT(MockData.CardName_BlackLotus);
+      queryByTestId("search-button")?.click();
+      const expected = queryByTestId("search-label");
+      await waitFor(() => {
+        expect(expected).toHaveTextContent("1 of 1");
+      });
+    });
 
-    test("displays message if card search failed", () =>
-      new Promise<void>((done) => {
-        const { queryByTestId } = Render_SUT(MockData.NetworkError);
-        queryByTestId("search-button")?.click();
-        const expected = queryByTestId("search-label");
-        setTimeout(() => {
-          expect(expected).toHaveTextContent("Error fetching data.");
-          done();
-        }, 100);
-      }));
+    test("displays message if card search returned no matches", async () => {
+      const { queryByTestId } = Render_SUT("InvalidCardName");
+      queryByTestId("search-button")?.click();
+      const expected = queryByTestId("search-label");
+      await waitFor(() => {
+        expect(expected).toHaveTextContent("No matching cards found.");
+      });
+    });
+
+    test("displays message if card search failed", async () => {
+      const { queryByTestId } = Render_SUT(MockData.NetworkError);
+      queryByTestId("search-button")?.click();
+      const expected = queryByTestId("search-label");
+      await waitFor(() => {
+        expect(expected).toHaveTextContent("Error fetching data.");
+      });
+    });
   });
 });

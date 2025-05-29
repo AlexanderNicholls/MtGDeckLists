@@ -40,23 +40,25 @@ const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
       }}
       aria-label="search form"
     >
-      <input
-        className="search-card-name"
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Enter a Card Name..."
-        id="search-input"
-        aria-label="search input"
-        autoFocus
-      />
-      <button
-        type="submit"
-        className="search-button"
-        aria-label="search button"
-      >
-        <FaMagnifyingGlass title="search" />
-      </button>
+      <section className="search-entry">
+        <input
+          className="search-card-name"
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Enter a Card Name..."
+          id="search-input"
+          aria-label="search input"
+          autoFocus
+        />
+        <button
+          type="submit"
+          className="search-button"
+          aria-label="search button"
+        >
+          <FaMagnifyingGlass title="search" />
+        </button>
+      </section>
       <label
         className="search-label"
         aria-label="search results label"

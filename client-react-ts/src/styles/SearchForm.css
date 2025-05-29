@@ -1,15 +1,16 @@
 .search-form {
-  width: 300px;
-  display: block;
-  margin: auto;
-  position: relative;
-  top: 70vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.search-entry {
+  display: flex;
 }
 
 .search-label {
   margin: auto;
-  display: block;
-  width: fit-content;
 }
 
 .search-card-name {

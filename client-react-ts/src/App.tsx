@@ -6,7 +6,7 @@ import { DataProvider } from "./context/DataContext";
 
 function App() {
   return (
-    <div className="App" data-testid="root">
+    <div className="app" data-testid="root">
       <DataProvider>
         <CardGallery />
         <SearchForm />

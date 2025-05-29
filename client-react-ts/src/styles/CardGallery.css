@@ -1,50 +1,43 @@
 .card-gallery {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 25vh;
-  margin-inline: auto;
-  width: fit-content;
+  display: flex;
+  width: 100%;
+  margin: 0 auto 5vh auto;
 }
 
-.card-gallery img {
-  width: 223px;
-  height: 311px;
+.card-image-container {
+  height: 40vh;
+  width: 30vh;
 }
 
-.card-image-next,
-.card-image-prev,
-.card-image-current {
-  margin: auto;
-  position: absolute;
-  left: -110px;
-  transition: all 0.1s ease;
+.card-image-container img {
+  height: 100%;
 }
 
-.card-image-current:hover {
-  transform: scale(1.05);
+.card-current {
+  z-index: 1;
+  margin: auto -10vh;
 }
 
-.card-image-next,
-.card-image-prev {
+.card-prev {
+  margin: auto -10vh auto 0;
+}
+
+.card-next {
+  margin: auto 0 auto -10vh;
+}
+
+.card-next,
+.card-prev {
   transform: scale(0.8);
 }
 
-.card-image-next:hover,
-.card-image-prev:hover {
+.card-current:hover {
+  transform: scale(1.05);
+}
+
+.card-next:hover,
+.card-prev:hover {
   transform: scale(0.85);
-}
-
-.card-image-prev,
-.card-image-next {
-  z-index: -1;
-}
-
-.card-image-prev {
-  left: -160px;
-}
-.card-image-next {
-  left: -60px;
 }
 
 .arrow-right,
@@ -52,17 +45,6 @@
   color: black;
   background: none;
   border: none;
-}
-
-.arrow-left {
-  right: 150px;
-  position: absolute;
-  top: 150px;
-}
-.arrow-right {
-  left: 150px;
-  position: absolute;
-  top: 150px;
 }
 
 .disabled {

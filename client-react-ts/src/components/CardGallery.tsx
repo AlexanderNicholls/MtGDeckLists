@@ -33,31 +33,37 @@ const CardGallery: React.FC = () => {
       >
         <FaAngleLeft />
       </button>
-      {index > 0 && cards.length > 1 && (
+      <section className="card-image-container card-prev">
+        {index > 0 && cards.length > 1 && (
+          <img
+            className="card-image-prev"
+            src={cards[index - 1]}
+            onClick={() => handlePrev()}
+            aria-label="previous card image"
+          />
+        )}
+      </section>
+      <section className="card-image-container card-current">
         <img
-          className="card-image-prev"
-          src={cards[index - 1]}
-          onClick={() => handlePrev()}
-          aria-label="previous card image"
+          className="card-image-current"
+          src={
+            cards.length > 0
+              ? cards[index]
+              : "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card"
+          }
+          aria-label="current card image"
         />
-      )}
-      <img
-        className="card-image-current"
-        src={
-          cards.length > 0
-            ? cards[index]
-            : "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card"
-        }
-        aria-label="current card image"
-      />
-      {index < cards.length - 1 && (
-        <img
-          className="card-image-next"
-          src={cards[index + 1]}
-          onClick={() => handleNext()}
-          aria-label="next card image"
-        />
-      )}
+      </section>
+      <section className="card-image-container card-next">
+        {index < cards.length - 1 && (
+          <img
+            className="card-image-next"
+            src={cards[index + 1]}
+            onClick={() => handleNext()}
+            aria-label="next card image"
+          />
+        )}
+      </section>
       <button
         className={`arrow-right
           ${

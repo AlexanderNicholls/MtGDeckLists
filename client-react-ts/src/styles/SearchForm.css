@@ -1,0 +1,22 @@
+.search-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.search-entry {
+  display: flex;
+}
+
+.search-label {
+  margin: auto;
+}
+
+.search-card-name {
+  width: 90%;
+}
+
+.search-button {
+  width: 10%;
+}

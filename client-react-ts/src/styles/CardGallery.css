@@ -13,21 +13,29 @@
   height: 100%;
 }
 
+@property --card-image-spacing {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: -10vh;
+}
+
 .card-current {
   z-index: 1;
-  margin: auto -10vh;
+  margin: auto var(--card-image-spacing);
 }
 
 .card-prev {
-  margin: auto -10vh auto 0;
+  margin-right: var(--card-image-spacing);
 }
 
 .card-next {
-  margin: auto 0 auto -10vh;
+  margin-left: var(--card-image-spacing);
 }
 
 .card-next,
 .card-prev {
+  margin-top: auto;
+  margin-bottom: auto;
   transform: scale(0.8);
 }
 

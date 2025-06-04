@@ -1,12 +1,4 @@
-import { useContext } from "react";
 import { Printing } from "../models/Card";
-import {
-  FaAngleRight,
-  FaAngleLeft,
-  FaRegClone,
-  FaRegCircleXmark,
-} from "react-icons/fa6";
-import DataContext from "../context/DataContext";
 import CloseButton from "./UIControls/CloseButton";
 import RightArrow from "./UIControls/RightArrow";
 import LeftArrow from "./UIControls/LeftArrow";

@@ -1,7 +1,7 @@
 .card-gallery {
   display: flex;
   width: 100%;
-  margin: 0 auto 5vh auto;
+  margin: 0 auto 3vh auto;
 }
 
 .card-image-container {
@@ -24,7 +24,7 @@
   margin: auto var(--card-image-spacing);
 }
 
-.card-prev {
+.card-previous {
   margin-right: var(--card-image-spacing);
 }
 
@@ -33,7 +33,7 @@
 }
 
 .card-next,
-.card-prev {
+.card-previous {
   margin-top: auto;
   margin-bottom: auto;
   transform: scale(0.8);
@@ -44,7 +44,7 @@
 }
 
 .card-next:hover,
-.card-prev:hover {
+.card-previous:hover {
   transform: scale(0.85);
 }
 
@@ -57,4 +57,57 @@
 
 .disabled {
   color: lightgray;
+}
+
+.card-gallery-printings {
+  position: absolute;
+  top: -10vh;
+  background: white;
+  padding-top: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
+  z-index: 2;
+  display: flex;
+  padding-bottom: 20px;
+}
+
+.card-printings-icon {
+  border-radius: 10px;
+  height: 30px;
+  width: 30px;
+  z-index: 3;
+  position: relative;
+  top: -40px;
+  left: 5px;
+  background: black;
+  color: white;
+  border: none;
+  font-size: 2rem;
+}
+
+.card-printings-close {
+  border-radius: 10px;
+  height: 30px;
+  width: 30px;
+  z-index: 3;
+  position: absolute;
+  border: none;
+  background: none;
+  font-size: 2rem;
+  right: 10px;
+  top: 10px;
+}
+
+.card-printings-count {
+  z-index: 3;
+  position: relative;
+  top: -52px;
+  left: 5px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.card-printings-close:hover {
+  transform: scale(1.1);
 }

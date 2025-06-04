@@ -1,9 +1,10 @@
 import axios from "axios";
+import { Card } from "./models/Card";
 
 const API_URL = "http://localhost:5000/api";
 const GETCARDS = "/GetCards";
 
-const getCardsByName: (cardName: string) => Promise<string[]> = async (
+const getCardsByName: (cardName: string) => Promise<Card[]> = async (
   cardName
 ) => {
   try {

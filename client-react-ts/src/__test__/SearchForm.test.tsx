@@ -59,7 +59,7 @@ describe("SearchForm component", () => {
     });
 
     test("makes an api call if search text valid when clicked", async () => {
-      const { getByRole, getByText } = Render_SUT(MockData.CardName_BlackLotus);
+      const { getByRole, getByText } = Render_SUT(MockData.BlackLotus.name);
       getByRole("button", { name: searchButton })?.click();
 
       await waitFor(() => {
@@ -78,7 +78,7 @@ describe("SearchForm component", () => {
 
     test("displays message with card count and current viewing index", async () => {
       const { getByRole, getByLabelText } = Render_SUT(
-        MockData.CardName_BlackLotus
+        MockData.BlackLotus.name
       );
       getByRole("button", { name: searchButton })?.click();
       await waitFor(() => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import "../../styles/CloseButton.css";
 
 interface CloseButtonProps {
   handleClick: () => void;
@@ -8,7 +9,11 @@ interface CloseButtonProps {
 const CloseButton: React.FC<CloseButtonProps> = ({ handleClick }) => {
   return (
     <>
-      <button className="card-printings-close" onClick={() => handleClick()}>
+      <button
+        className="card-printings-close"
+        aria-label={"close printings button"}
+        onClick={() => handleClick()}
+      >
         <FaRegCircleXmark />
       </button>
     </>

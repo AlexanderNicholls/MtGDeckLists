@@ -3,6 +3,7 @@ import CloseButton from "./UIControls/CloseButton";
 import RightArrow from "./UIControls/RightArrow";
 import LeftArrow from "./UIControls/LeftArrow";
 import CardContainer from "./CardElements/CardContainer";
+import "../styles/CardSelector.css";
 
 interface CardSelectorProps {
   cardSelection: Printing[];
@@ -34,7 +35,7 @@ const CardSelector: React.FC<CardSelectorProps> = ({
   };
 
   return (
-    <>
+    <section className="card-selector" aria-label="card selector">
       <LeftArrow index={selectionIndex} handleClick={handlePrev} />
       <CardContainer
         position={-1}
@@ -63,7 +64,7 @@ const CardSelector: React.FC<CardSelectorProps> = ({
         handleClick={handleNext}
       />
       {isPrintingGallery && <CloseButton handleClick={handleCloseGallery} />}
-    </>
+    </section>
   );
 };
 

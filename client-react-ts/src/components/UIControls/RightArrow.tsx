@@ -1,6 +1,7 @@
 import React from "react";
 import { FaAngleRight } from "react-icons/fa6";
 import { Printing } from "../../models/Card";
+import "../../styles/Arrow.css";
 
 interface RightArrowProps {
   selection: Printing[];

@@ -1,6 +1,7 @@
 import React from "react";
 import type { Printing } from "../../models/Card";
 import PrintingsIcon from "./PrintingsIcon";
+import "../../styles/CardContainer.css";
 
 interface CardContainerProps {
   position: number;
@@ -41,7 +42,10 @@ const CardContainer: React.FC<CardContainerProps> = ({
 
   return (
     <>
-      <section className={`card-image-container card-${getPositionLabel()}`}>
+      <section
+        className={`card-image-container card-${getPositionLabel()}`}
+        aria-label={`${getPositionLabel()} card`}
+      >
         {isVisible() && (
           <>
             <img
@@ -50,7 +54,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
                 cardSelection[index + position]?.imageUrl ??
                 "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card"
               }
-              onClick={() => handleClick()}
+              onClick={() => cardSelection.length && handleClick()}
               aria-label={`${getPositionLabel()} card image`}
             />
             <PrintingsIcon

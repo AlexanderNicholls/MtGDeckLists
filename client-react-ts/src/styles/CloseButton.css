@@ -1,0 +1,16 @@
+.card-printings-close {
+  border-radius: 10px;
+  height: 30px;
+  width: 30px;
+  z-index: 3;
+  position: absolute;
+  border: none;
+  background: none;
+  font-size: 2rem;
+  right: 10px;
+  top: 10px;
+}
+
+.card-printings-close:hover {
+  transform: scale(1.1);
+}

@@ -1,12 +1,11 @@
 import { createContext, useState } from "react";
-import { Card, Printing } from "../models/Card";
+import { Card } from "../models/Card";
 
 interface MyContextProps {
   children: React.ReactNode;
   value?: {
     search: string;
     cards: Card[];
-    cardPrintings: Printing[];
     index: number;
   };
 }
@@ -16,8 +15,6 @@ export interface DataContextProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   cards: Card[];
   setCards: React.Dispatch<React.SetStateAction<Card[]>>;
-  cardPrintings: Printing[];
-  setCardPrintings: React.Dispatch<React.SetStateAction<Printing[]>>;
   index: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
   message: string;
@@ -29,8 +26,6 @@ export const InitializeContext = (
   setSearch: () => {},
   cards: [],
   setCards: () => {},
-  cardPrintings: [],
-  setCardPrintings: () => {},
   index: 0,
   setIndex: () => {},
   message: "",
@@ -41,8 +36,6 @@ export const InitializeContext = (
     setSearch: setSearch,
     cards: cards,
     setCards: setCards,
-    cardPrintings: cardPrintings,
-    setCardPrintings: setCardPrintings,
     index: index,
     setIndex: setIndex,
     message: message,
@@ -54,8 +47,6 @@ const DataContext = createContext<DataContextProps>({
   setSearch: () => {},
   cards: [],
   setCards: () => {},
-  cardPrintings: [],
-  setCardPrintings: () => {},
   index: 0,
   setIndex: () => {},
   message: "",
@@ -65,9 +56,6 @@ const DataContext = createContext<DataContextProps>({
 export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
   const [search, setSearch] = useState(value?.search || "");
   const [cards, setCards] = useState<Card[]>(value?.cards || []);
-  const [cardPrintings, setCardPrintings] = useState<Printing[]>(
-    value?.cardPrintings || []
-  );
   const [index, setIndex] = useState(value?.index || 0);
   const [message, setMessage] = useState("");
 
@@ -78,8 +66,6 @@ export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
         setSearch,
         cards,
         setCards,
-        cardPrintings,
-        setCardPrintings,
         index,
         setIndex,
         message,

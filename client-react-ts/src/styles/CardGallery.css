@@ -1,60 +1,11 @@
-.card-gallery {
+.card-gallery-printings {
+  position: absolute;
+  top: -10vh;
+  background: white;
+  padding-top: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
+  z-index: 2;
   display: flex;
-  width: 100%;
-  margin: 0 auto 5vh auto;
-}
-
-.card-image-container {
-  height: 40vh;
-  width: 30vh;
-}
-
-.card-image-container img {
-  height: 100%;
-}
-
-@property --card-image-spacing {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: -10vh;
-}
-
-.card-current {
-  z-index: 1;
-  margin: auto var(--card-image-spacing);
-}
-
-.card-prev {
-  margin-right: var(--card-image-spacing);
-}
-
-.card-next {
-  margin-left: var(--card-image-spacing);
-}
-
-.card-next,
-.card-prev {
-  margin-top: auto;
-  margin-bottom: auto;
-  transform: scale(0.8);
-}
-
-.card-current:hover {
-  transform: scale(1.05);
-}
-
-.card-next:hover,
-.card-prev:hover {
-  transform: scale(0.85);
-}
-
-.arrow-right,
-.arrow-left {
-  color: black;
-  background: none;
-  border: none;
-}
-
-.disabled {
-  color: lightgray;
+  padding-bottom: 20px;
 }

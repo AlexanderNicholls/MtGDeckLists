@@ -32,7 +32,7 @@ const Render_SUT = (
         index={index}
         cardSelection={cardSelection}
         handleClick={handleClick}
-        isPrintingGallery={isPrintingsGallery}
+        isPrintingsGallery={isPrintingsGallery}
       />
     </DataProvider>
   );

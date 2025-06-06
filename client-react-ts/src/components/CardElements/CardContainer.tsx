@@ -8,7 +8,7 @@ interface CardContainerProps {
   index: number;
   cardSelection: Printing[];
   handleClick: () => void;
-  isPrintingGallery: boolean;
+  isPrintingsGallery: boolean;
 }
 
 const CardContainer: React.FC<CardContainerProps> = ({
@@ -16,7 +16,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
   index,
   cardSelection,
   handleClick,
-  isPrintingGallery,
+  isPrintingsGallery,
 }) => {
   const getPositionLabel = () => {
     switch (position) {
@@ -58,7 +58,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
               aria-label={`${getPositionLabel()} card image`}
             />
             <PrintingsIcon
-              showPrintingsIcon={position === 0 && !isPrintingGallery}
+              showPrintingsIcon={position === 0 && !isPrintingsGallery}
             />
           </>
         )}

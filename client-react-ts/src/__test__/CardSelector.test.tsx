@@ -12,7 +12,7 @@ const Render_SUT = (isPrintingsGallery: boolean = false) =>
       setIndex={() => {}}
       handleSelection={() => {}}
       handleCloseGallery={() => {}}
-      isPrintingGallery={isPrintingsGallery}
+      isPrintingsGallery={isPrintingsGallery}
     />
   );
 

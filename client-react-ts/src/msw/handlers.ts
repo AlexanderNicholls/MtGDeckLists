@@ -15,15 +15,15 @@ const Handlers = [
 
     switch (cardName) {
       case MockData.BlackLotus.name:
-        return HttpResponse.json([MockData.BlackLotus.printings[0].imageUrl]);
+        return HttpResponse.json([MockData.BlackLotus]);
       case MockData.GildedLotus.name:
-        return HttpResponse.json([MockData.GildedLotus.printings[0].imageUrl]);
+        return HttpResponse.json([MockData.GildedLotus]);
       case MockData.LotusPetal.name:
-        return HttpResponse.json([MockData.LotusPetal.printings[0].imageUrl]);
+        return HttpResponse.json([MockData.LotusPetal]);
       case MockData.JeweledLotus.name:
-        return HttpResponse.json([MockData.JeweledLotus.printings[0].imageUrl]);
+        return HttpResponse.json([MockData.JeweledLotus]);
       case MockData.LotusBloom.name:
-        return HttpResponse.json([MockData.LotusBloom.printings[0].imageUrl]);
+        return HttpResponse.json([MockData.LotusBloom]);
       case MockData.NetworkError:
         return HttpResponse.error();
       default:

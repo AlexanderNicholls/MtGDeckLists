@@ -46,7 +46,7 @@ const CardGallery: React.FC = () => {
             setIndex={setPrintingsIndex}
             handleSelection={() => handleSelectPrinting()}
             handleCloseGallery={() => setIsPrintingSelectorOpen(false)}
-            isPrintingGallery={true}
+            isPrintingsGallery={true}
           />
         </section>
       )}

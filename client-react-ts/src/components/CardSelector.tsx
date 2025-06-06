@@ -11,7 +11,7 @@ interface CardSelectorProps {
   setIndex: React.Dispatch<React.SetStateAction<number>>;
   handleSelection: () => void;
   handleCloseGallery: () => void;
-  isPrintingGallery?: boolean;
+  isPrintingsGallery?: boolean;
 }
 
 const CardSelector: React.FC<CardSelectorProps> = ({
@@ -20,7 +20,7 @@ const CardSelector: React.FC<CardSelectorProps> = ({
   setIndex,
   handleSelection,
   handleCloseGallery,
-  isPrintingGallery = false,
+  isPrintingsGallery = false,
 }) => {
   const handlePrev = () => {
     if (selectionIndex > 0) {
@@ -42,28 +42,28 @@ const CardSelector: React.FC<CardSelectorProps> = ({
         cardSelection={cardSelection}
         index={selectionIndex}
         handleClick={handlePrev}
-        isPrintingGallery={isPrintingGallery}
+        isPrintingsGallery={isPrintingsGallery}
       />
       <CardContainer
         position={0}
         cardSelection={cardSelection}
         index={selectionIndex}
         handleClick={handleSelection}
-        isPrintingGallery={isPrintingGallery}
+        isPrintingsGallery={isPrintingsGallery}
       />
       <CardContainer
         position={1}
         cardSelection={cardSelection}
         index={selectionIndex}
         handleClick={handleNext}
-        isPrintingGallery={isPrintingGallery}
+        isPrintingsGallery={isPrintingsGallery}
       />
       <RightArrow
         selection={cardSelection}
         index={selectionIndex}
         handleClick={handleNext}
       />
-      {isPrintingGallery && <CloseButton handleClick={handleCloseGallery} />}
+      {isPrintingsGallery && <CloseButton handleClick={handleCloseGallery} />}
     </section>
   );
 };

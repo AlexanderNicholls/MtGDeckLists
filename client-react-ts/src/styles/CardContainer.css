@@ -1,0 +1,67 @@
+.card-image-container {
+  height: 40vh;
+  width: 30vh;
+}
+
+.card-image-container img {
+  height: 100%;
+}
+
+@property --card-image-spacing {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: -10vh;
+}
+
+.card-current {
+  z-index: 1;
+  margin: auto var(--card-image-spacing);
+}
+
+.card-previous {
+  margin-right: var(--card-image-spacing);
+}
+
+.card-next {
+  margin-left: var(--card-image-spacing);
+}
+
+.card-next,
+.card-previous {
+  margin-top: auto;
+  margin-bottom: auto;
+  transform: scale(0.8);
+}
+
+.card-current:hover {
+  transform: scale(1.05);
+}
+
+.card-next:hover,
+.card-previous:hover {
+  transform: scale(0.85);
+}
+
+.card-printings-icon {
+  border-radius: 10px;
+  height: 30px;
+  width: 30px;
+  z-index: 3;
+  position: relative;
+  top: -40px;
+  left: 5px;
+  background: black;
+  color: white;
+  border: none;
+  font-size: 2rem;
+}
+
+.card-printings-count {
+  z-index: 3;
+  position: relative;
+  top: -52px;
+  left: 5px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+}

@@ -1,10 +1,11 @@
 import { createContext, useState } from "react";
+import { Card } from "../models/Card";
 
 interface MyContextProps {
   children: React.ReactNode;
   value?: {
     search: string;
-    cards: string[];
+    cards: Card[];
     index: number;
   };
 }
@@ -12,8 +13,8 @@ interface MyContextProps {
 export interface DataContextProps {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
-  cards: string[];
-  setCards: React.Dispatch<React.SetStateAction<string[]>>;
+  cards: Card[];
+  setCards: React.Dispatch<React.SetStateAction<Card[]>>;
   index: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
   message: string;
@@ -54,7 +55,7 @@ const DataContext = createContext<DataContextProps>({
 
 export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
   const [search, setSearch] = useState(value?.search || "");
-  const [cards, setCards] = useState<string[]>(value?.cards || []);
+  const [cards, setCards] = useState<Card[]>(value?.cards || []);
   const [index, setIndex] = useState(value?.index || 0);
   const [message, setMessage] = useState("");
 

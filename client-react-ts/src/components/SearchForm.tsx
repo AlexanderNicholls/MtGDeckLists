@@ -1,5 +1,5 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { getCardsByName } from "../api.ts";
 import "../styles/SearchForm.css";
 import DataContext from "../context/DataContext.tsx";

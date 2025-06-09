@@ -14,16 +14,16 @@ const Handlers = [
     Logs.LogCall(URIs.GetByCardName, [cardName ?? ""]);
 
     switch (cardName) {
-      case MockData.CardName_BlackLotus:
-        return HttpResponse.json([MockData.ImageUrl_BlackLotus]);
-      case MockData.CardName_GildedLotus:
-        return HttpResponse.json([MockData.ImageUrl_GildedLotus]);
-      case MockData.CardName_LotusPetal:
-        return HttpResponse.json([MockData.ImageUrl_LotusPetal]);
-      case MockData.CardName_JeweledLotus:
-        return HttpResponse.json([MockData.ImageUrl_JeweledLotus]);
-      case MockData.CardName_LotusBloom:
-        return HttpResponse.json([MockData.ImageUrl_LotusBloom]);
+      case MockData.BlackLotus.name:
+        return HttpResponse.json([MockData.BlackLotus]);
+      case MockData.GildedLotus.name:
+        return HttpResponse.json([MockData.GildedLotus]);
+      case MockData.LotusPetal.name:
+        return HttpResponse.json([MockData.LotusPetal]);
+      case MockData.JeweledLotus.name:
+        return HttpResponse.json([MockData.JeweledLotus]);
+      case MockData.LotusBloom.name:
+        return HttpResponse.json([MockData.LotusBloom]);
       case MockData.NetworkError:
         return HttpResponse.error();
       default:

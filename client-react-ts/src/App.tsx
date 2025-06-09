@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./styles/App.css";
 import CardGallery from "./components/CardGallery";
 import SearchForm from "./components/SearchForm";

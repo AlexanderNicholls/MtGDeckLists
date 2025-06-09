@@ -1,79 +1,64 @@
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
-import "../styles/CardGallery.css";
 import DataContext from "../context/DataContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import "../styles/CardGallery.css";
+import CardSelector from "./CardSelector";
+import { Card } from "../models/Card";
 
 const CardGallery: React.FC = () => {
-  const { cards, index, setIndex, setMessage } = useContext(DataContext);
+  const { cards, setCards, index, setIndex, setMessage } =
+    useContext(DataContext);
+  const [isPrintingSelectorOpen, setIsPrintingSelectorOpen] = useState(false);
+  const [printingsIndex, setPrintingsIndex] = useState(0);
 
   useEffect(() => {
-    if (index > cards.length - 1 || index < 0) setIndex(0);
+    if (cards.length) {
+      if (index > cards.length - 1 || index < 0) setIndex(0);
+      setMessage(`${index + 1} of ${cards.length}`);
+    }
   }, [index, cards.length]);
 
-  const handlePrev = () => {
-    if (index > 0) {
-      setMessage(`${index} of ${cards.length}`);
-      setIndex((prevIndex) => prevIndex - 1);
-    }
+  const handleSelectCard = () => {
+    setPrintingsIndex(cards[index].selectedPrinting);
+    setIsPrintingSelectorOpen(!isPrintingSelectorOpen);
   };
 
-  const handleNext = () => {
-    if (cards.length > 0 && index < cards.length - 1) {
-      setMessage(`${index + 2} of ${cards.length}`);
-      setIndex((prevIndex) => prevIndex + 1);
-    }
+  const handleSelectPrinting = () => {
+    setCards((c) =>
+      c.map((card: Card) =>
+        card.name === c[index].name
+          ? { ...card, selectedPrinting: printingsIndex }
+          : card
+      )
+    );
+    setIsPrintingSelectorOpen(false);
   };
 
   return (
     <section className="card-gallery" aria-label="card gallery">
-      <button
-        className={`arrow-left ${index === 0 ? "disabled" : ""}`}
-        onClick={() => handlePrev()}
-        aria-label="previous arrow button"
-      >
-        <FaAngleLeft />
-      </button>
-      <section className="card-image-container card-prev">
-        {index > 0 && cards.length > 1 && (
-          <img
-            className="card-image-prev"
-            src={cards[index - 1]}
-            onClick={() => handlePrev()}
-            aria-label="previous card image"
+      {isPrintingSelectorOpen && (
+        <section
+          className="card-gallery-printings"
+          aria-label="card printings selector"
+        >
+          <CardSelector
+            cardSelection={cards[index].printings}
+            selectionIndex={printingsIndex}
+            setIndex={setPrintingsIndex}
+            handleSelection={() => handleSelectPrinting()}
+            handleCloseGallery={() => setIsPrintingSelectorOpen(false)}
+            isPrintingsGallery={true}
           />
+        </section>
+      )}
+      <CardSelector
+        cardSelection={cards.map(
+          (card) => card.printings[card.selectedPrinting]
         )}
-      </section>
-      <section className="card-image-container card-current">
-        <img
-          className="card-image-current"
-          src={
-            cards.length > 0
-              ? cards[index]
-              : "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card"
-          }
-          aria-label="current card image"
-        />
-      </section>
-      <section className="card-image-container card-next">
-        {index < cards.length - 1 && (
-          <img
-            className="card-image-next"
-            src={cards[index + 1]}
-            onClick={() => handleNext()}
-            aria-label="next card image"
-          />
-        )}
-      </section>
-      <button
-        className={`arrow-right
-          ${
-            cards.length === 0 || index === cards.length - 1 ? "disabled" : ""
-          }`}
-        onClick={() => handleNext()}
-        aria-label="next arrow button"
-      >
-        <FaAngleRight />
-      </button>
+        selectionIndex={index}
+        setIndex={setIndex}
+        handleSelection={() => handleSelectCard()}
+        handleCloseGallery={() => setIsPrintingSelectorOpen(false)}
+      />
     </section>
   );
 };

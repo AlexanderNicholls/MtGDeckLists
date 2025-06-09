@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { describe, test, expect } from "vitest";
 import CardContainer from "../components/CardElements/CardContainer";
 import MockData from "./__mocks__/MockData";
-import type { Printing } from "../models/Card";
+import type { Card, Printing } from "../models/Card";
 import { DataProvider } from "../context/DataContext";
 
 const IMG_URI_CardBack =
@@ -52,6 +52,53 @@ describe("Card Container", () => {
     cardImg.click();
     expect(clickCount).toBe(1);
   });
+
+  test.each([
+    [left, previousCardImage],
+    [center, currentCardImage],
+    [right, nextCardImage],
+  ])(
+    "should display card back image if card indices missing printing url",
+    (position, role) => {
+      const { getByRole } = render(
+        <DataProvider
+          value={{
+            search: "",
+            cards: [
+              {
+                name: "testCard",
+                selectedPrinting: 0,
+                printings: [{} as Printing],
+              } as Card,
+              {
+                name: "testCard2",
+                selectedPrinting: 0,
+                printings: [{} as Printing],
+              } as Card,
+              {
+                name: "testCard3",
+                selectedPrinting: 0,
+                printings: [{} as Printing],
+              } as Card,
+            ],
+            index: 1,
+          }}
+        >
+          <CardContainer
+            position={position}
+            index={1}
+            cardSelection={[{} as Printing, {} as Printing, {} as Printing]}
+            handleClick={() => {}}
+            isPrintingsGallery={false}
+          />
+        </DataProvider>
+      );
+      const cardImg = getByRole("img", {
+        name: role,
+      }) as HTMLImageElement;
+      expect(cardImg.src).toEqual(IMG_URI_CardBack);
+    }
+  );
 
   test("should not call handleClick when clicked if no cards provided", () => {
     let clickCount = 0;

@@ -7,11 +7,12 @@
 
 .search-entry {
   display: flex;
+  height: 3vh;
 }
 
 .search-label {
   margin: auto;
-  height: 1rem;
+  height: 3vh;
 }
 
 .search-card-name {

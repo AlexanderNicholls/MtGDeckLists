@@ -1,12 +1,14 @@
 import { createContext, useState } from "react";
 import { Card } from "../models/Card";
+import type Deck from "../models/Deck";
 
 interface MyContextProps {
   children: React.ReactNode;
   value?: {
-    search: string;
-    cards: Card[];
-    index: number;
+    search?: string;
+    cards?: Card[];
+    index?: number;
+    decks?: Deck[];
   };
 }
 
@@ -19,6 +21,8 @@ export interface DataContextProps {
   setIndex: React.Dispatch<React.SetStateAction<number>>;
   message: string;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
+  decks: Deck[];
+  setDecks: React.Dispatch<React.SetStateAction<Deck[]>>;
 }
 
 export const InitializeContext = (
@@ -29,7 +33,9 @@ export const InitializeContext = (
   index: 0,
   setIndex: () => {},
   message: "",
-  setMessage: () => {}
+  setMessage: () => {},
+  decks: [],
+  setDecks: () => {}
 ) =>
   createContext<DataContextProps>({
     search: search,
@@ -40,6 +46,8 @@ export const InitializeContext = (
     setIndex: setIndex,
     message: message,
     setMessage: setMessage,
+    decks: decks,
+    setDecks: setDecks,
   });
 
 const DataContext = createContext<DataContextProps>({
@@ -51,6 +59,8 @@ const DataContext = createContext<DataContextProps>({
   setIndex: () => {},
   message: "",
   setMessage: () => {},
+  decks: [],
+  setDecks: () => {},
 });
 
 export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
@@ -58,6 +68,7 @@ export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
   const [cards, setCards] = useState<Card[]>(value?.cards || []);
   const [index, setIndex] = useState(value?.index || 0);
   const [message, setMessage] = useState("");
+  const [decks, setDecks] = useState<Deck[]>(value?.decks || []);
 
   return (
     <DataContext.Provider
@@ -70,6 +81,8 @@ export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
         setIndex,
         message,
         setMessage,
+        decks,
+        setDecks,
       }}
     >
       {children}

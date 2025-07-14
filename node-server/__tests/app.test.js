@@ -60,7 +60,7 @@ describe("api/GetDecks", () => {
     appServer.close();
   });
 
-  test.only("gets empty list if no decks saved", async () => {
+  test("gets empty list if no decks saved", async () => {
     const mockFile = JSON.stringify([]);
     fs.readFileSync.mockResolvedValue(mockFile);
     const result = await request(app).get("/api/GetDecks");
@@ -73,10 +73,9 @@ describe("api/GetDecks", () => {
     const expected = {
       name: "TestDeck",
       cards: [getPrinting(BlackLotus_Card, 0)],
+      id: 1,
     };
-    const mockFile = JSON.stringify({
-      decks: [expected],
-    });
+    const mockFile = JSON.stringify([expected]);
     fs.readFileSync.mockResolvedValue(mockFile);
     const result = await request(app).get("/api/GetDecks");
     const resultObj = JSON.parse(result.text);
@@ -89,6 +88,7 @@ describe("api/GetDecks", () => {
     const deck1 = {
       name: "TestDeck",
       cards: [getPrinting(BlackLotus_Card, 0), getPrinting(BlackLotus_Card, 1)],
+      id: 1,
     };
     const deck2 = {
       name: "TestDeck2",
@@ -96,10 +96,9 @@ describe("api/GetDecks", () => {
         getPrinting(GildedLotus_Card, 0),
         getPrinting(GildedLotus_Card, 1),
       ],
+      id: 2,
     };
-    const mockFile = JSON.stringify({
-      decks: [deck1, deck2],
-    });
+    const mockFile = JSON.stringify([deck1, deck2]);
     fs.readFileSync.mockResolvedValue(mockFile);
     const result = await request(app).get("/api/GetDecks");
     const resultObj = JSON.parse(result.text);
@@ -113,6 +112,7 @@ describe("api/GetDecks", () => {
     const deck1 = {
       name: "TestDeck",
       cards: [getPrinting(BlackLotus_Card, 0), getPrinting(BlackLotus_Card, 1)],
+      id: 1,
     };
     const deck2 = {
       name: "TestDeck2",
@@ -120,10 +120,9 @@ describe("api/GetDecks", () => {
         getPrinting(GildedLotus_Card, 0),
         getPrinting(GildedLotus_Card, 1),
       ],
+      id: 2,
     };
-    const mockFile = JSON.stringify({
-      decks: [deck2, deck1],
-    });
+    const mockFile = JSON.stringify([deck2, deck1]);
     fs.readFileSync.mockResolvedValue(mockFile);
     const result = await request(app).get("/api/GetDecks");
     const resultObj = JSON.parse(result.text);
@@ -283,12 +282,13 @@ describe("api/SaveDeck", () => {
 
   test("calling Save Deck makes call to write updated decks to file system", async () => {
     const updateDeck = { id: 1, name: "Test Deck A", cards: [] };
+    fs.readFileSync.mockResolvedValue(JSON.stringify([updateDeck]));
     const result = await request(app)
       .put(`/api/SaveDeck/${updateDeck.id}`)
       .send(updateDeck);
 
+    expect(result.status).toBe(200);
     expect(fs.readFileSync).toHaveBeenCalledTimes(1);
     expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
-    expect(result.status).toBe(200);
   });
 });

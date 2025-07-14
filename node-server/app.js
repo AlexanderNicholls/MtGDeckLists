@@ -55,11 +55,9 @@ app.get("/api/GetCards", async (req, res) => {
 
 app.get("/api/GetDecks", async (req, res) => {
   try {
-    const fileContent = fs.readFileSync("./data/db.json", "utf-8");
-    console.log(fileContent);
+    const fileContent = await fs.readFileSync("./data/db.json", "utf-8");
     const decks = JSON.parse(fileContent);
-    console.log(decks);
-    res.status(200).json(decks); //.sort((a, b) => a.id - b.id));
+    res.status(200).json(decks.sort((a, b) => a.id - b.id));
   } catch (err) {
     res.status(500).json({ error: `Error fetching data, ${err.message}` });
   }
@@ -78,20 +76,21 @@ app.delete("/api/DeleteDeck/:id", (req, res) => {
   }
 });
 
-app.put("/api/SaveDeck/:id", (req, res) => {
+app.put("/api/SaveDeck/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const updateDeck = req.body;
-    const existingDecks = JSON.parse(
-      fs.readFileSync("./data/db.json", "utf-8")
-    );
+    const fileContent = await fs.readFileSync("./data/db.json", "utf-8");
+    const existingDecks = JSON.parse(fileContent);
     const result = existingDecks.map((deck) =>
       deck.id === id ? updateDeck : deck
     );
     if (!result.some((deck) => deck.id === id)) result.push(updateDeck);
     fs.writeFileSync("./data/db.json", JSON.stringify(result), "utf-8");
+
     res.status(200).json(result);
   } catch (err) {
+    console.log(`Error saving deck: ${err.message}`);
     res.status(500).json(err.message);
   }
 });

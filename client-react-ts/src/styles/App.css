@@ -5,7 +5,12 @@
 }
 
 body {
-  background: grey;
+  background-color: black;
+  background-image: url("https://cdnb.artstation.com/p/assets/images/images/012/840/427/large/jedd-chevrier-gateway-to-the-guilds-chevrier.jpg?1536775576");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  overflow: hidden;
 }
 
 .app {
@@ -25,4 +30,5 @@ body {
   position: relative;
   background: white;
   border-radius: 10px;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.25);
 }

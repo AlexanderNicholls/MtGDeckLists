@@ -23,6 +23,8 @@ export interface DataContextProps {
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   decks: Deck[];
   setDecks: React.Dispatch<React.SetStateAction<Deck[]>>;
+  selectedDeck: Deck;
+  setSelectedDeck: React.Dispatch<React.SetStateAction<Deck>>;
 }
 
 export const InitializeContext = (
@@ -35,7 +37,9 @@ export const InitializeContext = (
   message: "",
   setMessage: () => {},
   decks: [],
-  setDecks: () => {}
+  setDecks: () => {},
+  selectedDeck: Deck,
+  setSelectedDeck: () => {}
 ) =>
   createContext<DataContextProps>({
     search: search,
@@ -48,6 +52,8 @@ export const InitializeContext = (
     setMessage: setMessage,
     decks: decks,
     setDecks: setDecks,
+    selectedDeck: selectedDeck,
+    setSelectedDeck: setSelectedDeck,
   });
 
 const DataContext = createContext<DataContextProps>({
@@ -61,6 +67,8 @@ const DataContext = createContext<DataContextProps>({
   setMessage: () => {},
   decks: [],
   setDecks: () => {},
+  selectedDeck: {} as Deck,
+  setSelectedDeck: () => {},
 });
 
 export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
@@ -69,6 +77,7 @@ export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
   const [index, setIndex] = useState(value?.index || 0);
   const [message, setMessage] = useState("");
   const [decks, setDecks] = useState<Deck[]>(value?.decks || []);
+  const [selectedDeck, setSelectedDeck] = useState<Deck>({} as Deck);
 
   return (
     <DataContext.Provider
@@ -83,6 +92,8 @@ export const DataProvider: React.FC<MyContextProps> = ({ children, value }) => {
         setMessage,
         decks,
         setDecks,
+        selectedDeck,
+        setSelectedDeck,
       }}
     >
       {children}

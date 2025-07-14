@@ -33,11 +33,7 @@ const getDecks: () => Promise<Deck[]> = async () => {
 
 const deleteDeck: (deck: Deck) => Promise<boolean> = async (deck: Deck) => {
   try {
-    const response = await axios.delete(`${API_URL}${DELETEDECK}`, {
-      params: {
-        id: deck.id,
-      },
-    });
+    const response = await axios.delete(`${API_URL}${DELETEDECK}/${deck.id}`);
     return response.status === 200;
   } catch (err) {
     return false;

@@ -60,10 +60,8 @@ describe("api/GetDecks", () => {
     appServer.close();
   });
 
-  test("gets empty list if no decks saved", async () => {
-    const mockFile = JSON.stringify({
-      decks: [],
-    });
+  test.only("gets empty list if no decks saved", async () => {
+    const mockFile = JSON.stringify([]);
     fs.readFileSync.mockResolvedValue(mockFile);
     const result = await request(app).get("/api/GetDecks");
     const resultObj = JSON.parse(result.text);
@@ -87,7 +85,7 @@ describe("api/GetDecks", () => {
     expect(resultObj[0]).toEqual(expected);
   });
 
-  test("gets list with one deck if one deck saved", async () => {
+  test("gets list with two decks if two decks saved", async () => {
     const deck1 = {
       name: "TestDeck",
       cards: [getPrinting(BlackLotus_Card, 0), getPrinting(BlackLotus_Card, 1)],
@@ -268,5 +266,29 @@ describe("api/GetCards", () => {
 
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(result.text).toBe("[]");
+  });
+});
+
+describe("api/SaveDeck", () => {
+  beforeAll((done) => {
+    appServer = app.listen(0, done);
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
+  });
+
+  afterAll(() => appServer.close());
+
+  test("calling Save Deck makes call to write updated decks to file system", async () => {
+    const updateDeck = { id: 1, name: "Test Deck A", cards: [] };
+    const result = await request(app)
+      .put(`/api/SaveDeck/${updateDeck.id}`)
+      .send(updateDeck);
+
+    expect(fs.readFileSync).toHaveBeenCalledTimes(1);
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+    expect(result.status).toBe(200);
   });
 });

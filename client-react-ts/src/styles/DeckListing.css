@@ -1,5 +1,11 @@
 .deck-listing {
   display: flex;
+  flex-direction: column;
+}
+
+.deck-listing-main {
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
 
@@ -16,12 +22,28 @@
   filter: brightness(150%);
 }
 
-.deck-listing-edit {
-  background: rgb(20, 150, 20);
-  border-radius: 5px 0 0 5px;
+.deck-listing-controls {
+  flex-direction: row;
 }
 
-.deck-listing-delete {
-  background: rgb(200, 20, 20);
-  border-radius: 0 5px 5px 0;
+.deck-listing-card-count {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 1.5rem;
+  justify-content: center;
+  font-size: 0.5rem;
+  color: white;
+}
+
+.deck-listing_card-count-bar-base {
+  width: 100%;
+  height: 0.5rem;
+  background-color: rgb(50, 50, 50);
+  border-radius: 5px;
+}
+.deck-listing_card-count-bar-progress {
+  height: 0.5rem;
+  background-color: rgb(50, 100, 50);
+  border-radius: 5px;
 }

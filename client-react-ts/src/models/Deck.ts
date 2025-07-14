@@ -1,11 +1,11 @@
-import type { Printing } from "./Card";
+import type { Card } from "./Card";
 
 class Deck {
   id: number;
   name: string;
-  cards: Printing[];
+  cards: Card[];
 
-  constructor(id: number, name: string, cards: Printing[]) {
+  constructor(id: number, name: string, cards: Card[]) {
     this.id = id;
     this.name = name;
     this.cards = cards;

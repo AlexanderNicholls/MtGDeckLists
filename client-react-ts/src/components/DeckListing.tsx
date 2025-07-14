@@ -14,28 +14,51 @@ const DeckListing: React.FC<DeckListingProps> = ({
   handleEdit,
   handleDelete,
 }) => {
+  const isDeckValid = () => {
+    return deck && deck.id > 0 && deck.name && Array.isArray(deck.cards);
+  };
+
   return (
-    <tr className="deck-listing" aria-label="deck listing">
-      <td className="deck-listing-name" aria-label="deck name">
-        {deck.name.length > 13 ? `${deck.name.slice(0, 10)}...` : deck.name}
-      </td>
-      <td className="deck-listing-controls">
-        <button
-          className="deck-listing-btn deck-listing-edit"
-          aria-label="edit deck button"
-          onClick={() => handleEdit(deck)}
-        >
-          <FaPencil />
-        </button>
-        <button
-          className="deck-listing-btn deck-listing-delete"
-          aria-label="delete deck button"
-          onClick={() => handleDelete(deck)}
-        >
-          <FaTrashCan />
-        </button>
-      </td>
-    </tr>
+    <>
+      {isDeckValid() && (
+        <tr className="deck-listing" aria-label="deck listing">
+          <section className="deck-listing-main">
+            <td className="deck-listing-name" aria-label="deck name">
+              {deck.name.length > 13
+                ? `${deck.name.slice(0, 10)}...`
+                : deck.name}
+            </td>
+            <td className="deck-listing-controls">
+              <button
+                className="deck-listing-btn edit-btn"
+                aria-label="edit deck button"
+                onClick={() => handleEdit(deck)}
+              >
+                <FaPencil />
+              </button>
+              <button
+                className="deck-listing-btn delete-btn"
+                aria-label="delete deck button"
+                onClick={() => handleDelete(deck)}
+              >
+                <FaTrashCan />
+              </button>
+            </td>
+          </section>
+          <div className="deck-listing_card-count-bar-base">
+            <div
+              className="deck-listing_card-count-bar-progress"
+              style={{ width: `${(deck.cards.length / 100) * 100}%` }}
+            >
+              <label
+                className="deck-listing-card-count"
+                aria-label="deck card count"
+              >{`${deck.cards.length}/100`}</label>
+            </div>
+          </div>
+        </tr>
+      )}
+    </>
   );
 };
 

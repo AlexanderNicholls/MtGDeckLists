@@ -2,11 +2,11 @@ import { useContext, useEffect } from "react";
 import type Deck from "../models/Deck";
 import DeckListing from "./DeckListing";
 import { deleteDeck, getDecks } from "../api";
-import "../styles/DeckListings.css";
+import "../styles/DeckPanel.css";
 import DataContext from "../context/DataContext";
 
 const DeckListings = () => {
-  const { decks, setDecks } = useContext(DataContext);
+  const { decks, setDecks, setSelectedDeck } = useContext(DataContext);
 
   useEffect(() => {
     try {
@@ -16,9 +16,12 @@ const DeckListings = () => {
       };
       fetchDecks();
     } catch (err) {
-      console.error(`Error fetching data, ${err}`);
+      console.log(`Error fetching data, ${err}`);
     }
   }, []);
+
+  const handleEdit: (deck: Deck) => void = (deck: Deck) =>
+    setSelectedDeck(deck);
 
   const handleDelete: (deck: Deck) => void = async (deck: Deck) => {
     try {
@@ -30,25 +33,29 @@ const DeckListings = () => {
   };
 
   return (
-    <section className="deck-listings" aria-label="deck listings section">
+    <section className="deck-panel" aria-label="deck listings section">
       <h1 className="deck-listings-heading" aria-label="deck listings heading">
         Deck Listings:
       </h1>
-      <table className="deck-listings-table" aria-label="deck listings">
-        <tbody
-          className="deck-listings-body"
-          aria-label="deck listings content"
-        >
-          {decks?.map((deck) => (
-            <DeckListing
-              key={deck.id}
-              deck={deck}
-              handleEdit={() => {}}
-              handleDelete={handleDelete}
-            />
-          ))}
-        </tbody>
-      </table>
+      <section className="deck-panel-container">
+        <table className="deck-listings-table" aria-label="deck listings">
+          <tbody
+            className="deck-listings-body"
+            aria-label="deck listings content"
+          >
+            {decks
+              ?.sort((a, b) => a.name.localeCompare(b.name))
+              .map((deck) => (
+                <DeckListing
+                  key={deck.id}
+                  deck={deck}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
+                />
+              ))}
+          </tbody>
+        </table>
+      </section>
     </section>
   );
 };

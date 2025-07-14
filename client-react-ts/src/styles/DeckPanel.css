@@ -1,0 +1,58 @@
+.deck-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 100vmin;
+  max-width: 100vmin;
+  height: 55vh;
+  width: 210px;
+  margin: auto;
+  padding: 3vh;
+  top: 15vh;
+  left: -0;
+  position: fixed;
+  background: white;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.25);
+}
+
+.deck-panel button {
+  border: none;
+  color: white;
+  font-size: 0.6rem;
+  height: 1.2rem;
+  font-weight: 600;
+}
+
+.deck-contents-save {
+  background: rgb(20, 150, 20);
+  border-radius: 5px;
+}
+
+.deck-contents-save:hover {
+  filter: brightness(150%);
+}
+
+.deck-panel table {
+  height: 100%;
+  width: 100%;
+}
+
+.deck-panel-container {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.deck-panel td {
+  display: flex;
+}
+
+.deck-panel .edit-btn {
+  background: rgb(20, 150, 20);
+  border-radius: 5px 0 0 5px;
+}
+
+.deck-panel .delete-btn {
+  background: rgb(200, 20, 20);
+  border-radius: 0 5px 5px 0;
+}

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const axios = require("axios");
+const fs = require("fs");
 
 app.use(cors());
 app.use(express.json());
@@ -49,6 +50,29 @@ app.get("/api/GetCards", async (req, res) => {
     res.json(uniqueCardGroups);
   } catch (err) {
     res.status(500).json({ error: `Error fetching data, ${err.message}` });
+  }
+});
+
+app.get("/api/GetDecks", async (req, res) => {
+  try {
+    const fileContent = await fs.readFileSync("./data/db.json", "utf-8");
+    const decks = JSON.parse(fileContent).decks;
+    res.status(200).json(decks.sort((a, b) => a.name.localeCompare(b.name)));
+  } catch (err) {
+    res.status(500).json({ error: `Error fetching data, ${err.message}` });
+  }
+});
+
+app.delete("/api/DeleteDeck/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const fileContent = await fs.readFileSync("./data/db.json", "utf-8");
+    const decks = JSON.parse(fileContent).decks;
+    const updatedDecks = decks.filter((deck) => deck.id !== id);
+    await fs.writeFileSync("./data/db.json", updatedDecks, "utf-8");
+    res.status(200);
+  } catch (err) {
+    res.status(500);
   }
 });
 

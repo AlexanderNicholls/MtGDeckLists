@@ -2,10 +2,10 @@
   position: absolute;
   top: -10vh;
   background: white;
-  padding-top: 20px;
+  padding-top: 3vh;
   border-radius: 10px;
   border: 1px solid black;
   z-index: 2;
   display: flex;
-  padding-bottom: 20px;
+  padding-bottom: 3vh;
 }

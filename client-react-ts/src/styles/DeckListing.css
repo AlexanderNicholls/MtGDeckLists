@@ -1,0 +1,27 @@
+.deck-listing {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deck-listing-btn {
+  border: none;
+  color: white;
+  font-size: 0.6rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  font-weight: 600;
+}
+
+.deck-listing-btn:hover {
+  filter: brightness(150%);
+}
+
+.deck-listing-edit {
+  background: rgb(20, 150, 20);
+  border-radius: 5px 0 0 5px;
+}
+
+.deck-listing-delete {
+  background: rgb(200, 20, 20);
+  border-radius: 0 5px 5px 0;
+}

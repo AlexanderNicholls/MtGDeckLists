@@ -4,6 +4,7 @@ import CardContainer from "../components/CardElements/CardContainer";
 import MockData from "./__mocks__/MockData";
 import type { Card, Printing } from "../models/Card";
 import { DataProvider } from "../context/DataContext";
+import { CardProvider } from "../context/CardContext";
 
 const IMG_URI_CardBack =
   "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=-1&type=card";
@@ -24,9 +25,7 @@ const Render_SUT = (
   handleClick: () => void = () => {}
 ) =>
   render(
-    <DataProvider
-      value={{ search: "", cards: [MockData.BlackLotus], index: 0 }}
-    >
+    <CardProvider value={{ cards: [MockData.BlackLotus], index: 0 }}>
       <CardContainer
         position={position}
         index={index}
@@ -34,23 +33,34 @@ const Render_SUT = (
         handleClick={handleClick}
         isPrintingsGallery={isPrintingsGallery}
       />
-    </DataProvider>
+    </CardProvider>
   );
 
 describe("Card Container", () => {
-  test("should call handleClick when clicked", () => {
-    let clickCount = 0;
-    const logClick = () => (clickCount += 1);
-    const { getByRole } = Render_SUT(
-      [MockData.BlackLotus.printings[0]],
-      center,
-      0,
-      false,
-      logClick
-    );
-    const cardImg = getByRole("img", { name: currentCardImage });
-    cardImg.click();
-    expect(clickCount).toBe(1);
+  describe("handleClick", () => {
+    test("should call handleClick when clicked", () => {
+      let clickCount = 0;
+      const logClick = () => (clickCount += 1);
+      const { getByRole } = Render_SUT(
+        [MockData.BlackLotus.printings[0]],
+        center,
+        0,
+        false,
+        logClick
+      );
+      const cardImg = getByRole("img", { name: currentCardImage });
+      cardImg.click();
+      expect(clickCount).toBe(1);
+    });
+
+    test("should not call handleClick when clicked if no cards provided", () => {
+      let clickCount = 0;
+      const logClick = () => (clickCount += 1);
+      const { getByRole } = Render_SUT([], center, 0, false, logClick);
+      const cardImg = getByRole("img", { name: currentCardImage });
+      cardImg.click();
+      expect(clickCount).toBe(0);
+    });
   });
 
   test.each([
@@ -61,9 +71,8 @@ describe("Card Container", () => {
     "should display card back image if card indices missing printing url",
     (position, role) => {
       const { getByRole } = render(
-        <DataProvider
+        <CardProvider
           value={{
-            search: "",
             cards: [
               {
                 name: "testCard",
@@ -91,7 +100,7 @@ describe("Card Container", () => {
             handleClick={() => {}}
             isPrintingsGallery={false}
           />
-        </DataProvider>
+        </CardProvider>
       );
       const cardImg = getByRole("img", {
         name: role,
@@ -99,15 +108,6 @@ describe("Card Container", () => {
       expect(cardImg.src).toEqual(IMG_URI_CardBack);
     }
   );
-
-  test("should not call handleClick when clicked if no cards provided", () => {
-    let clickCount = 0;
-    const logClick = () => (clickCount += 1);
-    const { getByRole } = Render_SUT([], center, 0, false, logClick);
-    const cardImg = getByRole("img", { name: currentCardImage });
-    cardImg.click();
-    expect(clickCount).toBe(0);
-  });
 
   describe("center card", () => {
     test("should render with card back if no cards provided", () => {
@@ -118,7 +118,7 @@ describe("Card Container", () => {
       expect(cardImg.src).toEqual(IMG_URI_CardBack);
     });
 
-    test("should render if card provided", () => {
+    test("should render card image if card provided", () => {
       const { getByRole } = Render_SUT([MockData.BlackLotus.printings[0]]);
       const cardImg = getByRole("img", {
         name: currentCardImage,
@@ -300,6 +300,4 @@ describe("Card Container", () => {
       expect(expected).not.toBeInTheDocument();
     });
   });
-
-  // TODO: Finish writing these tests
 });

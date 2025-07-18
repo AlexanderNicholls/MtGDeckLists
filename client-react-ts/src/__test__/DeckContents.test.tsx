@@ -3,8 +3,13 @@ import DeckContents from "../components/DeckContents";
 import { describe, test, expect, vi } from "vitest";
 import type Deck from "../models/Deck";
 
-const Render_SUT = (callback: (deck: Deck) => void = () => {}) =>
-  render(<DeckContents handleSave={callback} />);
+const Render_SUT = (
+  saveCallback: (deck: Deck) => void = () => {},
+  deleteCallback: (deck: Deck) => void = () => {}
+) =>
+  render(
+    <DeckContents handleSave={saveCallback} handleDelete={deleteCallback} />
+  );
 
 describe("Deck Contents component", () => {
   test("should render without crashing", () => {

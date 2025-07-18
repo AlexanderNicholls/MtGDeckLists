@@ -18,10 +18,12 @@ const Render_SUT = (
 const TestDeck = { id: 1, name: "TestDeck", cards: [] } as Deck;
 
 describe("Deck Listing component", () => {
-  test("should render without crashing", () => {
-    const { getByRole } = Render_SUT(TestDeck);
-    const element = getByRole("row", { name: "deck listing" });
-    expect(element).toBeInTheDocument();
+  describe("should render", () => {
+    test("without crashing", () => {
+      const { getByRole } = Render_SUT(TestDeck);
+      const element = getByRole("row", { name: "deck listing" });
+      expect(element).toBeInTheDocument();
+    });
   });
 
   describe("deck name", () => {
@@ -114,12 +116,12 @@ describe("Deck Listing component", () => {
     });
 
     test("should make a call to edit when clicked", () => {
-      const callBack = vi.fn((deck: Deck) => deck);
-      const { getByRole } = Render_SUT(TestDeck, callBack);
+      const editCallBack = vi.fn((deck: Deck) => deck);
+      const { getByRole } = Render_SUT(TestDeck, editCallBack);
       const button = getByRole("button", { name: "edit deck button" });
       button.click();
-      expect(callBack).toHaveBeenCalledTimes(1);
-      expect(callBack).toHaveBeenCalledWith<[Deck]>(TestDeck);
+      expect(editCallBack).toHaveBeenCalledTimes(1);
+      expect(editCallBack).toHaveBeenCalledWith<[Deck]>(TestDeck);
     });
   });
 
@@ -131,12 +133,12 @@ describe("Deck Listing component", () => {
     });
 
     test("should make a call to delete selected deck when clicked", () => {
-      const callBack = vi.fn((deck: Deck) => deck);
-      const { getByRole } = Render_SUT(TestDeck, () => {}, callBack);
+      const deleteCallback = vi.fn((deck: Deck) => deck);
+      const { getByRole } = Render_SUT(TestDeck, () => {}, deleteCallback);
       const button = getByRole("button", { name: "delete deck button" });
       button.click();
-      expect(callBack).toHaveBeenCalledTimes(1);
-      expect(callBack).toHaveBeenCalledWith<[Deck]>(TestDeck);
+      expect(deleteCallback).toHaveBeenCalledTimes(1);
+      expect(deleteCallback).toHaveBeenCalledWith<[Deck]>(TestDeck);
     });
   });
 });

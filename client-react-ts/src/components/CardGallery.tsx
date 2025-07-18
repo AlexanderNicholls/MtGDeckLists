@@ -1,12 +1,16 @@
-import DataContext from "../context/DataContext";
 import { useContext, useEffect, useState } from "react";
-import "../styles/CardGallery.css";
 import CardSelector from "./CardSelector";
 import { Card } from "../models/Card";
+import CardContext from "../context/CardContext";
+import DeckContext from "../context/DeckContext";
+import DataContext from "../context/DataContext";
+import "../styles/CardGallery.css";
 
 const CardGallery: React.FC = () => {
-  const { cards, setCards, index, setIndex, setMessage } =
-    useContext(DataContext);
+  const { cards, setCards, index, setIndex } = useContext(CardContext);
+  const { selectedDeck, setSelectedDeck } = useContext(DeckContext);
+  const { setMessage } = useContext(DataContext);
+
   const [isPrintingSelectorOpen, setIsPrintingSelectorOpen] = useState(false);
   const [printingsIndex, setPrintingsIndex] = useState(0);
 
@@ -18,8 +22,11 @@ const CardGallery: React.FC = () => {
   }, [index, cards.length]);
 
   const handleSelectCard = () => {
-    setPrintingsIndex(cards[index].selectedPrinting);
-    setIsPrintingSelectorOpen(!isPrintingSelectorOpen);
+    setSelectedDeck({
+      ...selectedDeck,
+      cards: [...selectedDeck.cards, cards[index]],
+    });
+    setIsPrintingSelectorOpen(false);
   };
 
   const handleSelectPrinting = () => {
@@ -57,6 +64,9 @@ const CardGallery: React.FC = () => {
         selectionIndex={index}
         setIndex={setIndex}
         handleSelection={() => handleSelectCard()}
+        handleClickPrinting={() =>
+          setIsPrintingSelectorOpen(!isPrintingSelectorOpen)
+        }
         handleCloseGallery={() => setIsPrintingSelectorOpen(false)}
       />
     </section>

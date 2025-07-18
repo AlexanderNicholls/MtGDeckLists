@@ -1,3 +1,12 @@
 .card-listing button {
   width: 1rem;
 }
+
+.card-listing-main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-listing-name:hover {
+  text-decoration: underline;
+}

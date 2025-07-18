@@ -1,0 +1,30 @@
+.deck-contents-save {
+  background: rgb(20, 150, 20);
+  border-radius: 5px 0 0 5px;
+}
+
+.deck-contents-delete {
+  background: rgb(150, 20, 20);
+  border-radius: 0 5px 5px 0;
+}
+
+.deck-contents-delete,
+.deck-contents-save {
+  width: 50%;
+}
+
+.deck-contents_deck-name {
+  border: none;
+  width: 70%;
+}
+
+.deck-contents-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.deck-contents-body {
+  display: flex;
+  flex-direction: column;
+}

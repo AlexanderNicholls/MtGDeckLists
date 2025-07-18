@@ -1,20 +1,24 @@
 import { expect, test, describe } from "vitest";
-import { render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import CardGallery from "../components/CardGallery";
 import MockData from "./__mocks__/MockData";
-import { DataProvider } from "../context/DataContext";
 import { Card } from "../models/Card";
+import { CardProvider } from "../context/CardContext";
+import { DataProvider } from "../context/DataContext";
 
 const cardGallery = "card gallery";
 const cardSelector = "card selector";
+const printingSelector = "card printings selector";
 const currentCardImage = "current card image";
 const previousCardImage = "previous card image";
 const nextCardImage = "next card image";
 
 const Render_SUT = (cards: Card[] = [], index: number = 0) =>
   render(
-    <DataProvider value={{ search: "", cards, index }}>
-      <CardGallery />
+    <DataProvider>
+      <CardProvider value={{ cards, index }}>
+        <CardGallery />
+      </CardProvider>
     </DataProvider>
   );
 
@@ -52,43 +56,9 @@ describe("CardGallery component", () => {
     expect(cardLeft).not.toBeInTheDocument();
   });
 
-  describe("Card gallery printings selector", () => {
-    test("should not intially render", () => {
-      const { queryByRole } = Render_SUT();
-      const expected = queryByRole("region", {
-        name: "card printings selector",
-      });
-      expect(expected).not.toBeInTheDocument();
-    });
-
-    test("should render when clicking on the center card image", async () => {
-      const { getByRole } = Render_SUT([MockData.BlackLotus]);
-      const cardImgCenter = getByRole("img", { name: currentCardImage });
-
-      cardImgCenter.click();
-
-      await waitFor(() => {
-        const expected = getByRole("region", {
-          name: "card printings selector",
-        });
-        expect(expected).toBeInTheDocument();
-      });
-    });
-
-    test("should close printings gallery on clicking center print image", async () => {
-      const { getByRole, queryByRole } = Render_SUT([MockData.BlackLotus]);
-      const cardImgCenter = getByRole("img", {
-        name: currentCardImage,
-      }) as HTMLImageElement;
-
-      cardImgCenter.click();
-
-      await waitFor(async () => {
-        const printingsGallery = queryByRole("region", {
-          name: "card printings selector",
-        });
-        expect(printingsGallery).not.toBeInTheDocument();
-      });
-    });
+  test("should not render printing gallery on initial render", () => {
+    const { queryByRole } = Render_SUT();
+    const expected = queryByRole("region", { name: printingSelector });
+    expect(expected).not.toBeInTheDocument();
   });
 });

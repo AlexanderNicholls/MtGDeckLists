@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaPlus, FaTrashCan } from "react-icons/fa6";
 import "../styles/CardListing.css";
 import type { Card } from "../models/Card";
+import CardContext from "../context/CardContext";
 
 interface CardListingProps {
   card: Card;
@@ -14,10 +15,17 @@ const CardListing: React.FC<CardListingProps> = ({
   handleAdd,
   handleDelete,
 }) => {
+  const { viewCard } = useContext(CardContext);
   return (
     <tr className="card-listing" aria-label="card listing">
-      <td className="card-listing-name" aria-label="card name">
-        {card.name.length > 13 ? `${card.name.slice(0, 10)}...` : card.name}
+      <td className="card-listing-main" aria-label="card entry">
+        <label
+          className="card-listing-name"
+          aria-label="card name"
+          onClick={() => viewCard(card)}
+        >
+          {card.name.length > 17 ? `${card.name.slice(0, 14)}...` : card.name}
+        </label>
         <section className="card-listing-controls">
           <button
             className="card-listing-btn edit-btn"

@@ -76,23 +76,45 @@ app.delete("/api/DeleteDeck/:id", (req, res) => {
   }
 });
 
-app.put("/api/SaveDeck/:id", async (req, res) => {
+app.put("/api/SaveDeck", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
     const updateDeck = req.body;
+
     const fileContent = await fs.readFileSync("./data/db.json", "utf-8");
     const existingDecks = JSON.parse(fileContent);
-    const result = existingDecks.map((deck) =>
-      deck.id === id ? updateDeck : deck
-    );
-    if (!result.some((deck) => deck.id === id)) result.push(updateDeck);
-    fs.writeFileSync("./data/db.json", JSON.stringify(result), "utf-8");
 
-    res.status(200).json(result);
+    if (updateDeck.id <= 0) updateDeck.id = GetNewDeckId(existingDecks);
+    const { found, decks } = UpdateDecks(updateDeck, existingDecks);
+
+    if (!found) decks.push(updateDeck);
+    fs.writeFileSync("./data/db.json", JSON.stringify(decks), "utf-8");
+
+    res.status(200).json(decks);
   } catch (err) {
     console.log(`Error saving deck: ${err.message}`);
     res.status(500).json(err.message);
   }
 });
+
+const GetNewDeckId = (decks) => {
+  if (decks.length === 0) return 1;
+  return Math.max(...decks.map((deck) => deck.id)) + 1;
+};
+
+const UpdateDecks = (updateDeck, decks) => {
+  let deckFound = false;
+  const result = decks.map((deck) => {
+    if (deck.id === updateDeck.id) {
+      deckFound = true;
+      return {
+        ...deck,
+        name: updateDeck.name,
+        cards: updateDeck.cards,
+      };
+    }
+    return deck;
+  });
+  return { found: deckFound, decks: result };
+};
 
 module.exports = app;

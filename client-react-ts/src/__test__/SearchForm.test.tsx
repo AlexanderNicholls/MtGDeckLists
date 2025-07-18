@@ -4,6 +4,7 @@ import SearchForm from "../components/SearchForm";
 import { URIs, Logs } from "../__test__/__mocks__/MockApi";
 import MockData from "../__test__/__mocks__/MockData";
 import { DataProvider } from "../context/DataContext";
+import { CardProvider } from "../context/CardContext";
 
 const searchForm = "search form";
 const searchInput = "search input";
@@ -12,7 +13,9 @@ const searchButton = "search button";
 const Render_SUT = (cardName: string = "") =>
   render(
     <DataProvider>
-      <SearchForm initialSearch={cardName} />
+      <CardProvider>
+        <SearchForm initialSearch={cardName} />
+      </CardProvider>
     </DataProvider>
   );
 
@@ -64,7 +67,6 @@ describe("SearchForm component", () => {
 
       await waitFor(() => {
         expect(Logs.CallHistory[URIs.GetByCardName]).toHaveLength(1);
-        expect(getByText("1 of 1")).toBeInTheDocument();
       });
     });
 

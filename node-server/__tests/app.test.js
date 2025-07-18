@@ -283,9 +283,7 @@ describe("api/SaveDeck", () => {
   test("calling Save Deck makes call to write updated decks to file system", async () => {
     const updateDeck = { id: 1, name: "Test Deck A", cards: [] };
     fs.readFileSync.mockResolvedValue(JSON.stringify([updateDeck]));
-    const result = await request(app)
-      .put(`/api/SaveDeck/${updateDeck.id}`)
-      .send(updateDeck);
+    const result = await request(app).put(`/api/SaveDeck`).send(updateDeck);
 
     expect(result.status).toBe(200);
     expect(fs.readFileSync).toHaveBeenCalledTimes(1);

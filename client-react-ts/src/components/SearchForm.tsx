@@ -3,14 +3,16 @@ import { useContext, useEffect } from "react";
 import { getCardsByName } from "../api.ts";
 import "../styles/SearchForm.css";
 import DataContext from "../context/DataContext.tsx";
+import CardContext from "../context/CardContext.tsx";
 
 interface SearchFormProps {
   initialSearch?: string;
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({ initialSearch = "" }) => {
-  const { search, setSearch, setCards, index, setIndex, message, setMessage } =
-    useContext(DataContext);
+  const { search, setSearch, setCards, index, setIndex } =
+    useContext(CardContext);
+  const { message, setMessage } = useContext(DataContext);
 
   useEffect(() => {
     setSearch(initialSearch);

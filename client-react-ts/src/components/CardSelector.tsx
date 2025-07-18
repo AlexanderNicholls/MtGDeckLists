@@ -10,6 +10,7 @@ interface CardSelectorProps {
   selectionIndex: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
   handleSelection: () => void;
+  handleClickPrinting?: () => void;
   handleCloseGallery: () => void;
   isPrintingsGallery?: boolean;
 }
@@ -19,6 +20,7 @@ const CardSelector: React.FC<CardSelectorProps> = ({
   selectionIndex,
   setIndex,
   handleSelection,
+  handleClickPrinting,
   handleCloseGallery,
   isPrintingsGallery = false,
 }) => {
@@ -49,6 +51,7 @@ const CardSelector: React.FC<CardSelectorProps> = ({
         cardSelection={cardSelection}
         index={selectionIndex}
         handleClick={handleSelection}
+        handleClickPrinting={handleClickPrinting}
         isPrintingsGallery={isPrintingsGallery}
       />
       <CardContainer

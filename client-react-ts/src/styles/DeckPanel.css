@@ -24,12 +24,7 @@
   font-weight: 600;
 }
 
-.deck-contents-save {
-  background: rgb(20, 150, 20);
-  border-radius: 5px;
-}
-
-.deck-contents-save:hover {
+.deck-panel button:hover {
   filter: brightness(150%);
 }
 

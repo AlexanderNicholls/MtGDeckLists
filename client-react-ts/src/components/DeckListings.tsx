@@ -1,12 +1,17 @@
 import { useContext, useEffect } from "react";
 import type Deck from "../models/Deck";
 import DeckListing from "./DeckListing";
-import { deleteDeck, getDecks } from "../api";
+import { getDecks } from "../api";
+import DeckContext from "../context/DeckContext";
 import "../styles/DeckPanel.css";
-import DataContext from "../context/DataContext";
+import "../styles/DeckListings.css";
 
-const DeckListings = () => {
-  const { decks, setDecks, setSelectedDeck } = useContext(DataContext);
+interface DeckListingsProps {
+  handleDelete: (deck: Deck) => void;
+}
+
+const DeckListings: React.FC<DeckListingsProps> = ({ handleDelete }) => {
+  const { decks, setDecks, setSelectedDeck } = useContext(DeckContext);
 
   useEffect(() => {
     try {
@@ -22,15 +27,6 @@ const DeckListings = () => {
 
   const handleEdit: (deck: Deck) => void = (deck: Deck) =>
     setSelectedDeck(deck);
-
-  const handleDelete: (deck: Deck) => void = async (deck: Deck) => {
-    try {
-      const isSuccess = await deleteDeck(deck);
-      if (isSuccess) setDecks(decks.filter((d) => d.id !== deck.id));
-    } catch (err) {
-      console.log(`Error processing delete request, ${err}`);
-    }
-  };
 
   return (
     <section className="deck-panel" aria-label="deck listings section">
@@ -56,6 +52,13 @@ const DeckListings = () => {
           </tbody>
         </table>
       </section>
+      <button
+        className="deck-listings_create-deck"
+        aria-label="Create Deck"
+        onClick={() => setSelectedDeck({ id: -1, name: "", cards: [] } as Deck)}
+      >
+        Create New Deck
+      </button>
     </section>
   );
 };

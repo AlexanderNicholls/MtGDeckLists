@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { expect, describe, test } from "vitest";
+import { expect, describe, test, vi } from "vitest";
 import LeftArrow from "../components/UIControls/LeftArrow";
 
 const previousArrow = "previous arrow button";
@@ -29,11 +29,10 @@ describe("Arrow buttons", () => {
   );
 
   test("should call handleClick when clicked", () => {
-    let clickCount = 0;
-    const logClick = () => (clickCount += 1);
-    const { getByRole } = Render_SUT(1, logClick);
+    const clickCallBack = vi.fn(() => {});
+    const { getByRole } = Render_SUT(1, clickCallBack);
     const leftArrow = getByRole("button", { name: previousArrow });
     leftArrow.click();
-    expect(clickCount).toBe(1);
+    expect(clickCallBack).toHaveBeenCalledTimes(1);
   });
 });

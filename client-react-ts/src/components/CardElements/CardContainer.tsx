@@ -8,6 +8,7 @@ interface CardContainerProps {
   index: number;
   cardSelection: Printing[];
   handleClick: () => void;
+  handleClickPrinting?: () => void;
   isPrintingsGallery: boolean;
 }
 
@@ -16,6 +17,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
   index,
   cardSelection,
   handleClick,
+  handleClickPrinting,
   isPrintingsGallery,
 }) => {
   const getPositionLabel = () => {
@@ -59,6 +61,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
             />
             <PrintingsIcon
               showPrintingsIcon={position === 0 && !isPrintingsGallery}
+              handleClick={handleClickPrinting || (() => {})}
             />
           </>
         )}

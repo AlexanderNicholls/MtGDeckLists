@@ -40,4 +40,13 @@ const deleteDeck: (deck: Deck) => Promise<boolean> = async (deck: Deck) => {
   }
 };
 
-export { getCardsByName, getDecks, deleteDeck };
+const saveDeck: (deck: Deck) => Promise<boolean> = async (deck: Deck) => {
+  try {
+    const response = await axios.put(`${API_URL}/SaveDeck`, deck);
+    return response.status === 200;
+  } catch (err) {
+    return false;
+  }
+};
+
+export { getCardsByName, getDecks, deleteDeck, saveDeck };

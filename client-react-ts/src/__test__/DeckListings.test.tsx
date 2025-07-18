@@ -2,13 +2,16 @@ import { render } from "@testing-library/react";
 import DeckListings from "../components/DeckListings";
 import { expect, describe, test } from "vitest";
 import type Deck from "../models/Deck";
-import { DataProvider } from "../context/DataContext";
+import { DeckProvider } from "../context/DeckContext";
 
-const Render_SUT = (decks: Deck[] = []) =>
+const Render_SUT = (
+  decks: Deck[] = [],
+  deleteCallback: (deck: Deck) => void = () => {}
+) =>
   render(
-    <DataProvider value={{ decks: decks }}>
-      <DeckListings />
-    </DataProvider>
+    <DeckProvider value={{ decks: decks }}>
+      <DeckListings handleDelete={deleteCallback} />
+    </DeckProvider>
   );
 
 describe("Deck Listings Component", () => {

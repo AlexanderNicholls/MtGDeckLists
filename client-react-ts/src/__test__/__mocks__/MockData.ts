@@ -7,11 +7,11 @@ const MockData = {
     printings: [
       {
         imageUrl: "http://localhost:3000/BlackLotus.jpg",
-        multiverseid: 1,
+        id: "1",
       } as Printing,
       {
         imageUrl: "http://localhost:3000/BlackLotus2.jpg",
-        multiverseid: 6,
+        id: "6",
       } as Printing,
     ],
   } as Card,
@@ -21,7 +21,7 @@ const MockData = {
     printings: [
       {
         imageUrl: "http://localhost:3000/GildedLotus.jpg",
-        multiverseid: 2,
+        id: "2",
       } as Printing,
     ],
   } as Card,
@@ -31,7 +31,7 @@ const MockData = {
     printings: [
       {
         imageUrl: "http://localhost:3000/LotusPetal.jpg",
-        multiverseid: 3,
+        id: "3",
       } as Printing,
     ],
   } as Card,
@@ -41,7 +41,7 @@ const MockData = {
     printings: [
       {
         imageUrl: "http://localhost:3000/JeweledLotus.jpg",
-        multiverseid: 4,
+        id: "4",
       } as Printing,
     ],
   } as Card,
@@ -51,7 +51,7 @@ const MockData = {
     printings: [
       {
         imageUrl: "http://localhost:3000/LotusBloom.jpg",
-        multiverseid: 5,
+        id: "5",
       } as Printing,
     ],
   } as Card,

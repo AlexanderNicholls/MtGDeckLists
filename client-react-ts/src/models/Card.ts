@@ -12,11 +12,13 @@ class Card {
 
 class Printing {
   imageUrl: string;
-  multiverseid: number;
+  id: string;
+  printingDate: string;
 
-  constructor(imageUrl: string, multiverseid: number) {
+  constructor(imageUrl: string, id: string, printingDate: string) {
     this.imageUrl = imageUrl;
-    this.multiverseid = multiverseid;
+    this.id = id;
+    this.printingDate = printingDate;
   }
 }
 

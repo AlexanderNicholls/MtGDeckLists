@@ -8,20 +8,21 @@ app.use(cors());
 app.use(express.json());
 
 const MTGIO_URL_NAME = "http://api.magicthegathering.io/v1/cards?name=";
+const SCRYFALL_URL_NAME =
+  "https://api.scryfall.com/cards/search?unique=prints&q=";
 
 app.get("/api/GetCards", async (req, res) => {
   try {
     if (!req.query.cardName || req.query.cardName.trim() === "") {
       return res.status(204).json({ data: [] });
     }
-    const response = (
-      await axios.get(MTGIO_URL_NAME, {
-        params: {
-          name: req.query.cardName,
-        },
-      })
-    ).data.cards.filter((card) => card.imageUrl);
-    const uniqueCardGroups = response.reduce((acc, card) => {
+    const response = await axios.get(SCRYFALL_URL_NAME, {
+      params: {
+        q: req.query.cardName,
+        unique: "prints",
+      },
+    });
+    const uniqueCardGroups = response.data.data.reduce((acc, card) => {
       let foundIndex;
       const found = acc.some((c, i) => {
         foundIndex = i;
@@ -29,18 +30,25 @@ app.get("/api/GetCards", async (req, res) => {
       });
       if (found) {
         acc[foundIndex].printings.push({
-          imageUrl: card.imageUrl,
-          multiverseid: card.multiverseid,
+          imageUrl:
+            card.image_uris?.normal || card.card_faces[0].image_uris.normal,
+          id: card.id,
+          printingDate: card.released_at,
         });
         acc[foundIndex].printings.sort(
-          (a, b) => a.multiverseid - b.multiverseid
+          (a, b) => new Date(a.printingDate) - new Date(b.printingDate)
         );
       } else {
         acc.push({
           name: card.name,
           selectedPrinting: 0,
           printings: [
-            { imageUrl: card.imageUrl, multiverseid: card.multiverseid },
+            {
+              imageUrl:
+                card.image_uris?.normal || card.card_faces[0].image_uris.normal,
+              id: card.id,
+              printingDate: card.released_at,
+            },
           ],
         });
         acc.sort((a, b) => a.name.localeCompare(b.name));

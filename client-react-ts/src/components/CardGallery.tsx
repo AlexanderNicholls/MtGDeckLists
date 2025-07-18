@@ -26,7 +26,7 @@ const CardGallery: React.FC = () => {
       ...selectedDeck,
       cards: [...selectedDeck.cards, cards[index]],
     });
-    setIsPrintingSelectorOpen(false);
+    closePrintings();
   };
 
   const handleSelectPrinting = () => {
@@ -37,7 +37,17 @@ const CardGallery: React.FC = () => {
           : card
       )
     );
+    closePrintings();
+  };
+
+  const openPrintings = () => {
+    setIsPrintingSelectorOpen(true);
+    setPrintingsIndex(cards[index].selectedPrinting);
+  };
+
+  const closePrintings = () => {
     setIsPrintingSelectorOpen(false);
+    setPrintingsIndex(0);
   };
 
   return (
@@ -52,7 +62,7 @@ const CardGallery: React.FC = () => {
             selectionIndex={printingsIndex}
             setIndex={setPrintingsIndex}
             handleSelection={() => handleSelectPrinting()}
-            handleCloseGallery={() => setIsPrintingSelectorOpen(false)}
+            handleCloseGallery={() => closePrintings()}
             isPrintingsGallery={true}
           />
         </section>
@@ -65,9 +75,9 @@ const CardGallery: React.FC = () => {
         setIndex={setIndex}
         handleSelection={() => handleSelectCard()}
         handleClickPrinting={() =>
-          setIsPrintingSelectorOpen(!isPrintingSelectorOpen)
+          isPrintingSelectorOpen ? closePrintings() : openPrintings()
         }
-        handleCloseGallery={() => setIsPrintingSelectorOpen(false)}
+        handleCloseGallery={() => closePrintings()}
       />
     </section>
   );

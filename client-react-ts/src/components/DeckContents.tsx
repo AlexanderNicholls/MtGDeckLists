@@ -24,8 +24,8 @@ const DeckContents: React.FC<DeckContentsProps> = ({
   ) => {
     let cards = selectedDeck.cards.filter(
       (card) =>
-        card.printings[card.selectedPrinting]?.multiverseid !==
-        selectedCard.printings[selectedCard.selectedPrinting]?.multiverseid
+        card.printings[card.selectedPrinting]?.id !==
+        selectedCard.printings[selectedCard.selectedPrinting]?.id
     );
     setSelectedDeck({ ...selectedDeck, cards: cards });
   };

@@ -3,7 +3,6 @@ import { describe, test, expect } from "vitest";
 import CardContainer from "../components/CardElements/CardContainer";
 import MockData from "./__mocks__/MockData";
 import type { Card, Printing } from "../models/Card";
-import { DataProvider } from "../context/DataContext";
 import { CardProvider } from "../context/CardContext";
 
 const IMG_URI_CardBack =
